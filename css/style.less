@@ -1,0 +1,41 @@
+@light-blue: #e0eaf1;
+.chat-container.jumbotron{
+	padding: 10px;
+}
+.chat-container{
+	min-height: 450px;
+	overflow-y: auto;
+	dt{
+		font-size: 12px;
+		min-width: 60px;
+		max-width: 100px;
+		.chat-item{
+			padding-top: 5px;
+			span{
+				padding-right: 3px;
+			}
+		}
+	}
+	dd{
+		margin-left: 110px;
+		margin-bottom: 8px;
+		.chat-msg{
+			padding: 2px 4px;
+			border-radius: 3px;
+			background-color: @light-blue;
+		}
+	}
+}
+.list-group{
+	h4{
+		.glyphicon{
+			margin-right: 5px;
+		}
+	}
+	.list-group-item{
+		padding: 5px;
+		img{
+			margin-right: 4px;
+		}
+	}
+}
