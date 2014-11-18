@@ -5,7 +5,7 @@
     <title>Chat</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
     <div class="container">
@@ -16,7 +16,7 @@
                     <dl class="dl-horizontal">
                         <dt>
                             <div class="chat-item">
-                                <span>User #1</span><img src="img/user_16.png" width="16" height="16" class="img-circle">
+                                <span>User #1</span><img src="assets/img/user_16.png" width="16" height="16" class="img-circle">
                             </div>
                         </dt>
                         <dd>
@@ -26,7 +26,7 @@
                         </dd>
                         <dt>
                             <div class="chat-item">
-                                <span>User #2</span><img src="img/user_16.png" width="16" height="16" class="img-circle">
+                                <span>User #2</span><img src="assets/img/user_16.png" width="16" height="16" class="img-circle">
                             </div>
                         </dt>
                         <dd>
@@ -36,7 +36,7 @@
                         </dd>
                         <dt>
                             <div class="chat-item">
-                                <span>Current User</span><img src="img/user_16.png" width="16" height="16" class="img-circle">
+                                <span>Current User</span><img src="assets/img/user_16.png" width="16" height="16" class="img-circle">
                             </div>
                         </dt>
                         <dd>
@@ -49,9 +49,9 @@
                 <div class="col-md-12">
                     <div class="input-group">
                         <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
-                        <input type="text" class="form-control" placeholder="Enter Message">
+                        <input type="text" name="chat_message" class="form-control" placeholder="Enter Message">
                         <div class="input-group-btn">
-                            <button type="button" class="btn btn-primary">Send</button>
+                            <button type="button" id="send-msg" class="btn btn-primary">Send</button>
                         </div>
                     </div>
                 </div>
@@ -60,14 +60,17 @@
                 <div class="list-group">
                     <h4><span class="glyphicon glyphicon-user"></span>Online Users</h4>
                     <ul class="list-group">
-                        <li class="list-group-item"><img class="img-circle" src="img/user_32.png" width="32" height="32">User #1</li>
-                        <li class="list-group-item"><img class="img-circle" src="img/user_32.png" width="32" height="32">User #2</li>
-                        <li class="list-group-item"><img class="img-circle" src="img/user_32.png" width="32" height="32">User #3</li>
+                        <li class="list-group-item"><img class="img-circle" src="assets/img/user_32.png" width="32" height="32">User #1</li>
+                        <li class="list-group-item"><img class="img-circle" src="assets/img/user_32.png" width="32" height="32">User #2</li>
+                        <li class="list-group-item"><img class="img-circle" src="assets/img/user_32.png" width="32" height="32">User #3</li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="assets/js/chat.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>

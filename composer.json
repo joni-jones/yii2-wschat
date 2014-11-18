@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {
+            "WSChat\\": "src/"
+        }
+    },
+    "require": {
+        "cboden/ratchet": "0.3.*"
+    }
+}
