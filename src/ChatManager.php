@@ -31,7 +31,7 @@ class ChatManager
      * @param $rid
      * @return null|ChatRoom
      */
-    public function getUserChatRoom($rid)
+    public function getUserChat($rid)
     {
         $user = $this->getUserByRid($rid);
         return $user ? $user->getChat() : null;
@@ -49,7 +49,7 @@ class ChatManager
     public function findChat($chatId, $rid)
     {
         $chat = null;
-        $user = $this->getUserByRid($rid);
+        $storedUser = $this->getUserByRid($rid);
         foreach ($this->users as $user) {
             $userChat = $user->getChat();
             if (!$userChat) {
@@ -57,14 +57,16 @@ class ChatManager
             }
             if ($userChat->getUid() == $chatId) {
                 $chat = $userChat;
+                echo 'User('.$rid.') will be joined to '.$chatId.PHP_EOL;
                 break;
             }
         }
         if (!$chat) {
+            echo 'Create new chat room: '.$chatId.' for user('.$rid.')'.PHP_EOL;
             $chat = new ChatRoom();
             $chat->setUid($chatId);
-            $user->setChat($chat);
         }
+        $storedUser->setChat($chat);
         return $chat;
     }
 
