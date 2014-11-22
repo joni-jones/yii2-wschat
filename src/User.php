@@ -7,7 +7,7 @@ namespace WSChat;
  */
 class User
 {
-    private $id;
+    public $id;
     private $rid;
     /** @var ChatRoom */
     private $chat;

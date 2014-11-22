@@ -62,7 +62,7 @@ class Chat implements MessageComponentInterface
         $rid = array_search($conn, $this->clients);
         echo 'Connection is closed '.$rid.PHP_EOL;
         if ($this->cm->getUserByRid($rid)) {
-            $this->cm->removeUserFromChat($rid);
+            $this->closeRequest($rid);
         }
         unset($this->clients[$rid]);
     }
@@ -101,10 +101,17 @@ class Chat implements MessageComponentInterface
     {
         echo 'Auth request from user: '.$rid.' and chat: '.$data['cid'].PHP_EOL;
         $chat = $this->cm->findChat($data['cid'], $rid);
+        $this->cm->setUserAttributes($rid, $data['user']);
         echo 'Count of users: '.sizeof($chat->getUsers()).PHP_EOL;
-        foreach ($chat->getUsers() as $user) {
+        $users = $chat->getUsers();
+        $response = [
+            'user' => $this->cm->getUserByRid($rid),
+            'users' => $users,
+            'join' => true,
+        ];
+        foreach ($users as $user) {
             $conn = $this->clients[$user->getRid()];
-            $conn->send(json_encode(['type' => 'message', 'data' => ['message' => $data['message'], 'join' => true]]));
+            $conn->send(json_encode(['type' => 'auth', 'data' => $response]));
         }
     }
 
@@ -132,6 +139,32 @@ class Chat implements MessageComponentInterface
             }
             $conn = $this->clients[$user->getRid()];
             $conn->send(json_encode(['type' => 'message', 'data' => $data]));
+        }
+    }
+
+    /**
+     * Process close request. Find user chat, remove user from chat and send message
+     * to other users in this chat
+     *
+     * @access public
+     * @param $rid
+     */
+    private function closeRequest($rid)
+    {
+        //get user for closed connection
+        $requestUser = $this->cm->getUserByRid($rid);
+        $chat = $this->cm->getUserChat($rid);
+        //remove user from chat room
+        $this->cm->removeUserFromChat($rid);
+        //send notification for other users in this chat
+        $users = $chat->getUsers();
+        $response = array(
+            'type' => 'close',
+            'data' => ['user' => $requestUser]
+        );
+        foreach ($users as $user) {
+            $conn = $this->clients[$user->getRid()];
+            $conn->send(json_encode($response));
         }
     }
 }

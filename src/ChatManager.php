@@ -106,5 +106,17 @@ class ChatManager
     {
 
     }
+
+    /**
+     * @TODO in future user attributes must be set from server side instead client side
+     */
+    public function setUserAttributes($rid, array $attrs)
+    {
+        $user = $this->getUserByRid($rid);
+        foreach ($attrs as $key => $value) {
+            $user->$key = $value;
+        }
+        $this->users[$rid] = $user;
+    }
 }
  
