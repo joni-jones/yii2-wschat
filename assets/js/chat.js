@@ -5,6 +5,14 @@
         Views: {}
     };
     Chat.vent = _.extend({}, Backbone.Events);
+    Chat.encode = function(input) {
+        if (!input) {
+            return '';
+        }
+        return input.replace(/[\u00A0-\u9999<>]/gim, function(i) {
+            return '&#' + i.charCodeAt(0) + ';';
+        });
+    };
 }());
 
 Chat.Room = function(options){
@@ -47,7 +55,8 @@ Chat.Room.prototype.addEventsHandlers = function(){
         /**
          * @TODO create localization message
          */
-        user.set('message', user.get('name') + ' connected to chat');
+        user.set('message', 'Connected to chat');
+        user.set('type', 'warning');
         self.users.add(user);
         //set current user
         if (!self.currentUser) {
@@ -58,10 +67,16 @@ Chat.Room.prototype.addEventsHandlers = function(){
     });
     Chat.vent.on('message:send', function(msg) {
         self.currentUser.set('message', msg);
+        self.currentUser.set('type', 'info');
         self.sendMessage(self.currentUser);
     });
     Chat.vent.on('user:remove', function(data) {
         var user = self.users.get(data.id);
+        /**
+         * @TODO add localization message and stylize it
+         */
+        user.set('message', 'Left this chat');
+        Chat.vent.trigger('message:add', user);
         self.users.remove(user);
     });
 };
@@ -95,7 +110,6 @@ Chat.Room.prototype.isFunction = function(name) {
 Chat.Room.prototype.onMessage = function(e) {
     try {
         var response = JSON.parse(e.data);
-        console.log(response);
         if (response.type == 'auth') {
             Chat.vent.trigger('user:auth', response.data);
         } else if(response.type == 'message') {
@@ -153,7 +167,8 @@ Chat.Views.Message = Backbone.View.extend({
 Chat.Views.Chat = Backbone.View.extend({
     el: '.chat-wrapper',
     events: {
-        'click #send-msg': 'sendMessage'
+        'click #send-msg': 'sendMessage',
+        'keypress #chat-message': 'checkKey'
     },
     initialize: function() {
         var self = this;
@@ -163,16 +178,30 @@ Chat.Views.Chat = Backbone.View.extend({
         }, self);
     },
     renderMessage: function(message) {
+        message.set('message', Chat.encode(message.get('message')));
         var msg = new Chat.Views.Message({model: message});
-        this.$el.find('.chat-container').append(msg.render().el);
+        var $container = this.$el.find('.chat-container');
+        $container.append(msg.render().el);
+        $container.animate({
+            scrollTop: $container[0].scrollHeight
+        }, 'slow');
         return this;
     },
     sendMessage: function() {
-        var msg = $('[name="chat_message"]').val();
+        var $input = $('[name="chat_message"]');
+        var msg = $input.val();
+        $input.val('');
         if (msg) {
             this.model.set('message', msg);
+            this.model.set('type', 'info');
             this.renderMessage(this.model);
             Chat.vent.trigger('message:send', msg);
+        }
+    },
+    checkKey: function(e) {
+        //check if enter is pressed
+        if (e.keyCode === 13) {
+            this.sendMessage();
         }
     }
 });
