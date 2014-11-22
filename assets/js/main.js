@@ -1,7 +1,5 @@
 $(document).ready(function() {
-    var chat = new Chat({url: 'ws.chat'});
-
-    $('#send-msg').click(function() {
-        chat.send($('[name="chat_message"]').val());
-    });
+    var chat = new Chat.Room({url: 'ws.chat'});
+    var chatView = new Chat.Views.Chat();
+    var userList = new Chat.Views.UserList({collection: chat.users});
 });
