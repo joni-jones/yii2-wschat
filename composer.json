@@ -1,4 +1,13 @@
 {
+    "name": "joni-jones/ws-chat",
+    "description": "Online chat based on web sockets and ratchet php",
+    "keywords": ["websockets", "backbone", "ratchet"],
+    "version": "0.0.1",
+    "minimum-stability": "dev",
+    "authors": [{
+        "name": "Ievgen Sentiabov",
+        "email": "ievgen.sentiabov@gmail.com"
+    }],
     "autoload": {
         "psr-4": {
             "WSChat\\": "src/"
