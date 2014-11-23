@@ -67,7 +67,6 @@ Chat.Room.prototype.addEventsHandlers = function(){
     });
     Chat.vent.on('message:send', function(msg) {
         self.currentUser.set('message', msg);
-        self.currentUser.set('type', 'info');
         self.sendMessage(self.currentUser);
     });
     Chat.vent.on('user:remove', function(data) {
@@ -113,7 +112,10 @@ Chat.Room.prototype.onMessage = function(e) {
         if (response.type == 'auth') {
             Chat.vent.trigger('user:auth', response.data);
         } else if(response.type == 'message') {
-            Chat.vent.trigger('message:add', new Chat.Models.User(response.data.message));
+            var user = new Chat.Models.User(response.data.message);
+            user.set('type', 'info');
+            Chat.vent.trigger('message:add', user);
+            this.showNotification(user);
         } else if(response.type == 'close') {
             Chat.vent.trigger('user:remove', response.data.user);
         }
@@ -145,6 +147,31 @@ Chat.Room.prototype.fillUsers = function(users, user) {
             this.users.add(users[key]);
         }
     }
+};
+Chat.Room.prototype.showNotification = function(user) {
+    if (!('Notification' in window)) {
+        return;
+    }
+    Notification.requestPermission(function() {
+        /**
+         * @TODO add localization message
+         */
+        var title = 'New message from ' + user.get('name');
+        var msg = user.get('message');
+        if (msg.length > 40) {
+            msg = msg.substring(0, 40) + '...';
+        }
+        var notification = new Notification(title, {
+            icon: user.get('avatar_32'),
+            body: msg
+        });
+        notification.onshow = function() {
+            //hide notification after 10 secs
+            setTimeout(function() {
+                notification.close();
+            }, 10000);
+        };
+    });
 };
 
 Chat.Models.User = Backbone.Model.extend({
@@ -179,6 +206,9 @@ Chat.Views.Chat = Backbone.View.extend({
     },
     renderMessage: function(message) {
         message.set('message', Chat.encode(message.get('message')));
+        if (!message.get('type')) {
+            message.set('type', 'warning');
+        }
         var msg = new Chat.Views.Message({model: message});
         var $container = this.$el.find('.chat-container');
         $container.append(msg.render().el);
