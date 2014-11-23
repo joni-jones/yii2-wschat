@@ -13,6 +13,20 @@
             return '&#' + i.charCodeAt(0) + ';';
         });
     };
+    Chat.dict = {
+        'ru': {
+            'New message from': 'Сообщение от',
+            'Connect to chat': 'Подкючился к чату',
+            'Left this chat': 'Вышел из чата'
+        }
+    };
+    Chat.t = function(message) {
+        var lang = $.cookie('chatLang') || 'en';
+        if (lang == 'en') {
+            return message;
+        }
+        return Chat.dict[lang][message];
+    };
 }());
 
 Chat.Room = function(options){
@@ -22,9 +36,9 @@ Chat.Room = function(options){
         port: 8080
     }, options);
     this.active = false;
-    this.init();
     this.users = new Chat.Collections.Users();
     this.currentUser = null;
+    this.init();
 };
 Chat.Room.prototype.init = function() {
     var self = this;
@@ -41,8 +55,14 @@ Chat.Room.prototype.init = function() {
     } catch (e) {
         console.log(e);
     }
+    self.initLang();
     self.addConnectionHandlers();
     self.addEventsHandlers();
+};
+Chat.Room.prototype.initLang = function() {
+    var lang = navigator.language || navigator.userLanguage;
+    lang = lang.split('-');
+    $.cookie('chatLang', lang[0], {expires: 1});
 };
 Chat.Room.prototype.addEventsHandlers = function(){
     var self = this;
@@ -52,10 +72,7 @@ Chat.Room.prototype.addEventsHandlers = function(){
             self.fillUsers(data.users, data.user);
         }
         var user = new Chat.Models.User(data.user);
-        /**
-         * @TODO create localization message
-         */
-        user.set('message', 'Connected to chat');
+        user.set('message', Chat.t('Connect to chat'));
         user.set('type', 'warning');
         self.users.add(user);
         //set current user
@@ -71,10 +88,7 @@ Chat.Room.prototype.addEventsHandlers = function(){
     });
     Chat.vent.on('user:remove', function(data) {
         var user = self.users.get(data.id);
-        /**
-         * @TODO add localization message and stylize it
-         */
-        user.set('message', 'Left this chat');
+        user.set('message', Chat.t('Left this chat'));
         Chat.vent.trigger('message:add', user);
         self.users.remove(user);
     });
@@ -149,21 +163,20 @@ Chat.Room.prototype.fillUsers = function(users, user) {
     }
 };
 Chat.Room.prototype.showNotification = function(user) {
+    var self = this;
     if (!('Notification' in window)) {
         return;
     }
     Notification.requestPermission(function() {
-        /**
-         * @TODO add localization message
-         */
-        var title = 'New message from ' + user.get('name');
+        var title = Chat.t('New message from') + ' ' + user.get('name');
         var msg = user.get('message');
         if (msg.length > 40) {
             msg = msg.substring(0, 40) + '...';
         }
         var notification = new Notification(title, {
             icon: user.get('avatar_32'),
-            body: msg
+            body: msg,
+            lang: self.lang
         });
         notification.onshow = function() {
             //hide notification after 10 secs
