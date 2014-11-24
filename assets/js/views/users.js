@@ -3,7 +3,7 @@ define([
 ], function(Backbone, Users, UserView) {
     var UserListView = Backbone.View.extend({
         collection: Users,
-        el: '.list-group',
+        el: '#user-list .list-group-container',
         initialize: function() {
             this.collection.on('add', this.renderUser, this);
         },

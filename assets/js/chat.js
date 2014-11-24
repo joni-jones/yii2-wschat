@@ -15,7 +15,7 @@ define([
     Chat.dict = {
         'ru': {
             'New message from': 'Сообщение от',
-            'Connect to chat': 'Подкючился к чату',
+            'Connect to chat': 'Подключился к чату',
             'Left this chat': 'Вышел из чата'
         }
     };
@@ -43,7 +43,7 @@ define([
         try {
             self.conn = new WebSocket('ws://' + self.options.url + ':' + self.options.port);
             //set current chat room, by default - all
-            self.cid = $('.chat-rooms .active').attr('data-chat');
+            self.cid = $('#chat-room-list .active').attr('data-chat');
             var timer = setInterval(function() {
                 if (self.conn.readyState) {
                     self.auth();
@@ -178,10 +178,10 @@ define([
                 lang: self.lang
             });
             notification.onshow = function() {
-                //hide notification after 10 secs
+                //hide notification after 5 secs
                 setTimeout(function() {
                     notification.close();
-                }, 10000);
+                }, 5000);
             };
         });
     };

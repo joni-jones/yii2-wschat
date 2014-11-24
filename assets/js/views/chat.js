@@ -7,12 +7,16 @@ define([
             'click #send-msg': 'sendMessage',
             'keypress #chat-message': 'checkKey'
         },
+        input: '#chat-message',
         initialize: function() {
             var self = this;
-            Chat.vent.on('message:add', this.renderMessage, self);
+            Chat.vent.on('message:add', self.renderMessage, self);
+            //event will be triggered when user was authorized in chat
             Chat.vent.on('user:setCurrent', function(user) {
                 self.model = user;
             }, self);
+            //event will be triggered when user was clicked in list
+            Chat.vent.on('user:select', self.selectUser, self);
         },
         renderMessage: function(message) {
             message.set('message', Chat.encode(message.get('message')));
@@ -28,7 +32,7 @@ define([
             return this;
         },
         sendMessage: function() {
-            var $input = $('[name="chat_message"]');
+            var $input = this.$el.find(this.input);
             var msg = $input.val();
             $input.val('');
             if (msg) {
@@ -42,6 +46,11 @@ define([
             //check if enter is pressed
             if (e.keyCode === 13) {
                 this.sendMessage();
+            }
+        },
+        selectUser: function(name) {
+            if (this.model.get('name') != name) {
+                this.$el.find(this.input).val('@' + name);
             }
         }
     });
