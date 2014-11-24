@@ -26,10 +26,18 @@
             <div role="navigation" class="col-md-3">
                 <div id="chat-room-list" class="list-group">
                     <h4><span class="glyphicon glyphicon-comment"></span>Chat Rooms</h4>
-                    <a href="#" class="list-group-item active" data-chat="0">All</a>
-                    <a href="#" class="list-group-item" data-chat="1">Room #1</a>
-                    <a href="#" class="list-group-item" data-chat="2">Room #2</a>
-                    <a href="#" class="list-group-item" data-chat="3">Room #2</a>
+                    <div class="btn-group" role="group">
+                        <button type="button" id="add-chat" class="btn btn-default">Add</button>
+                        <button type="button" id="history-chat" class="btn btn-default">History</button>
+                        <button type="button" id="share-chat" class="btn btn-default">Share</button>
+                        <button type="button" id="exit-chat" class="btn btn-default"><span class="glyphicon glyphicon-log-out"></span>Exit</button>
+                    </div>
+                    <div class="list-group-container">
+                        <a href="#" class="list-group-item active" data-chat="0">All</a>
+                        <a href="#" class="list-group-item" data-chat="1">Room #1</a>
+                        <a href="#" class="list-group-item" data-chat="2">Room #2</a>
+                        <a href="#" class="list-group-item" data-chat="3">Room #2</a>
+                    </div>
                 </div>
             </div>
             <div role="navigation" class="col-md-3">
