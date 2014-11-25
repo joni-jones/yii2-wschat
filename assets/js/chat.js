@@ -33,6 +33,15 @@ define([
         return pad.substring(0, pad.length - hours.length) + hours + ':' +
             pad.substring(0, pad.length - mins.length) + mins;
     };
+    Chat.makeLink = function(msg) {
+        msg = msg.split(' ');
+        for (var key in msg) {
+            if (/^https?:\/\//.test(msg[key])) {
+                msg[key] = '<a href="' + msg[key] + '" target="_blank">' + msg[key] + '</a>';
+            }
+        }
+        return msg.join(' ').trim();
+    };
 
     Chat.Room = function(options){
         this.conn = null;
@@ -133,8 +142,9 @@ define([
             } else if(response.type == 'message') {
                 var user = new User(response.data.message);
                 user.set('type', 'info');
+                //put copy of model to avoid message preparing
+                this.showNotification(user.clone());
                 Chat.vent.trigger('message:add', user);
-                this.showNotification(user);
             } else if(response.type == 'close') {
                 Chat.vent.trigger('user:remove', response.data.user);
             }

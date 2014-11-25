@@ -17,22 +17,14 @@ define([
             }, self);
             //event will be triggered when user was clicked in list
             Chat.vent.on('user:select', self.selectUser, self);
-            self.lastMessage = new Date();
         },
         renderMessage: function(message) {
-            var time = new Date();
-            message.set('timestamp', Chat.formatTime(time));
-            message.set('message', Chat.encode(message.get('message')));
-            if (!message.get('type')) {
-                message.set('type', 'warning');
-            }
             var msg = new Message({model: message});
             var $container = this.$el.find('.chat-container');
             $container.append(msg.render().el);
             $container.animate({
                 scrollTop: $container[0].scrollHeight
             }, 'slow');
-            self.lastMessage = time;
             return this;
         },
         sendMessage: function() {
