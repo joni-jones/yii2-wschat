@@ -7,7 +7,10 @@ define([
         tagName: 'a',
         className: 'list-group-item',
         attributes: {
-            href: '#'
+            href: '#',
+            'data-toggle': 'tooltip',
+            'data-placement': 'right',
+            title: Chat.t('Send message')
         },
         events: {
             'click': 'selectItem'

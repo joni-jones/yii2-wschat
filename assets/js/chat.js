@@ -16,7 +16,8 @@ define([
         'ru': {
             'New message from': 'Сообщение от',
             'Connect to chat': 'Подключился к чату',
-            'Left this chat': 'Вышел из чата'
+            'Left this chat': 'Вышел из чата',
+            'Send message': 'Отправить сообщение'
         }
     };
     Chat.t = function(message) {
