@@ -26,6 +26,13 @@ define([
         }
         return Chat.dict[lang][message];
     };
+    Chat.formatTime = function(time) {
+        var pad = '00';
+        var hours = '' + time.getHours();
+        var mins = '' + time.getMinutes();
+        return pad.substring(0, pad.length - hours.length) + hours + ':' +
+            pad.substring(0, pad.length - mins.length) + mins;
+    };
 
     Chat.Room = function(options){
         this.conn = null;

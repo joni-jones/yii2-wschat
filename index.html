@@ -57,7 +57,10 @@
                 </div>
             </dt>
             <dd>
-                <div class="chat-msg alert-<%=type%>"><%=message%></div>
+                <div class="chat-msg alert-<%=type%>">
+                    <span class="msg-time"><%=timestamp%></span>
+                    <div><%=message%></div>
+                </div>
             </dd>
         </dl>
     </script>

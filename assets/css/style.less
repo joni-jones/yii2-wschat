@@ -1,6 +1,13 @@
 @black: #000;
+@grey: #999;
 .chat-container.jumbotron{
 	padding: 10px;
+}
+.glyphicon{
+	padding-right: 3px;
+}
+.btn-group{
+	margin-bottom: 5px;
 }
 .chat-container{
 	height: 650px;
@@ -22,9 +29,20 @@
 	dd{
 		margin-left: 110px;
 		.chat-msg{
+			position: relative;
 			padding: 2px 4px;
 			border-radius: 3px;
 			color: @black;
+			.msg-time{
+				position: absolute;
+				left: 95%;
+				top: 5px;
+				font-size: 10px;
+				color: @grey;
+			}
+			div{
+				padding-right: 30px;
+			}
 		}
 	}
 }

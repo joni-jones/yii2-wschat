@@ -17,8 +17,11 @@ define([
             }, self);
             //event will be triggered when user was clicked in list
             Chat.vent.on('user:select', self.selectUser, self);
+            self.lastMessage = new Date();
         },
         renderMessage: function(message) {
+            var time = new Date();
+            message.set('timestamp', Chat.formatTime(time));
             message.set('message', Chat.encode(message.get('message')));
             if (!message.get('type')) {
                 message.set('type', 'warning');
@@ -29,6 +32,7 @@ define([
             $container.animate({
                 scrollTop: $container[0].scrollHeight
             }, 'slow');
+            self.lastMessage = time;
             return this;
         },
         sendMessage: function() {
@@ -50,7 +54,7 @@ define([
         },
         selectUser: function(name) {
             if (this.model.get('name') != name) {
-                this.$el.find(this.input).val('@' + name);
+                this.$el.find(this.input).val('@' + name + ':');
             }
         }
     });
