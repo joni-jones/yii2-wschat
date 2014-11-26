@@ -27,7 +27,6 @@ class Chat implements MessageComponentInterface
     public function __construct(ChatManager $cm)
     {
         $this->cm = $cm;
-        $this->cm->refreshChats();
     }
 
     /**
@@ -101,7 +100,6 @@ class Chat implements MessageComponentInterface
     {
         echo 'Auth request from user: '.$rid.' and chat: '.$data['cid'].PHP_EOL;
         $chat = $this->cm->findChat($data['cid'], $rid);
-        $this->cm->setUserAttributes($rid, $data['user']);
         echo 'Count of users: '.sizeof($chat->getUsers()).PHP_EOL;
         $users = $chat->getUsers();
         $response = [

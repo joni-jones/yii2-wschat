@@ -98,25 +98,5 @@ class ChatManager
         }
         unset($this->users[$rid]);
     }
-
-    /**
-     * @TODO Need to remove all current chats and restore chats from some data
-     */
-    public function refreshChats()
-    {
-
-    }
-
-    /**
-     * @TODO in future user attributes must be set from server side instead client side
-     */
-    public function setUserAttributes($rid, array $attrs)
-    {
-        $user = $this->getUserByRid($rid);
-        foreach ($attrs as $key => $value) {
-            $user->$key = $value;
-        }
-        $this->users[$rid] = $user;
-    }
 }
  
