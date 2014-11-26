@@ -32,12 +32,7 @@
                         <button type="button" id="share-chat" class="btn btn-default">Share</button>
                         <button type="button" id="exit-chat" class="btn btn-default"><span class="glyphicon glyphicon-log-out"></span>Exit</button>
                     </div>
-                    <div class="list-group-container">
-                        <a href="#" class="list-group-item active" data-chat="0">All</a>
-                        <a href="#" class="list-group-item" data-chat="1">Room #1</a>
-                        <a href="#" class="list-group-item" data-chat="2">Room #2</a>
-                        <a href="#" class="list-group-item" data-chat="3">Room #2</a>
-                    </div>
+                    <div class="list-group-container"></div>
                 </div>
             </div>
             <div role="navigation" class="col-md-3">
@@ -66,6 +61,9 @@
     </script>
     <script id="user-tpl" type="text/template">
         <img class="img-circle" src="<%=avatar_32%>" width="32" height="32"><%=name%>
+    </script>
+    <script id="room-tpl" type="text/template">
+        <%=name%>
     </script>
 </body>
 </html>

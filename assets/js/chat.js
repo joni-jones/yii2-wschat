@@ -58,20 +58,24 @@ define([
     Chat.Room.prototype.init = function() {
         var self = this;
         try {
-            self.conn = new WebSocket('ws://' + self.options.url + ':' + self.options.port);
-            //set current chat room, by default - all
             self.cid = $('#chat-room-list .active').attr('data-chat');
-            var timer = setInterval(function() {
-                if (self.conn.readyState) {
-                    self.auth();
-                    clearInterval(timer);
-                }
-            }, 200);
+            if (self.cid) {
+                self.conn = new WebSocket('ws://' + self.options.url + ':' + self.options.port);
+                self.addConnectionHandlers();
+                //set current chat room, by default - all
+                var timer = setInterval(function() {
+                    if (self.conn.readyState) {
+                        self.auth();
+                        clearInterval(timer);
+                    }
+                }, 200);
+            } else {
+                alert('Current room is not available');
+            }
         } catch (e) {
             console.log(e);
         }
         self.initLang();
-        self.addConnectionHandlers();
         self.addEventsHandlers();
     };
     Chat.Room.prototype.initLang = function() {
