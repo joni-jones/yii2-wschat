@@ -2,7 +2,7 @@
     "name": "joni-jones/ws-chat",
     "description": "Online chat based on web sockets and ratchet php",
     "keywords": ["websockets", "backbone", "ratchet"],
-    "version": "0.0.1",
+    "version": "0.0.2",
     "minimum-stability": "dev",
     "authors": [{
         "name": "Ievgen Sentiabov",
