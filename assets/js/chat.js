@@ -1,7 +1,7 @@
 define([
     'jquery', 'backbone', 'underscore', 'collections/users',
-    'models/user', 'jquery-cookie'
-], function($, Backbone, _, Users, User) {
+    'models/user', 'helper', 'jquery-cookie'
+], function($, Backbone, _, Users, User, Helper) {
     var Chat = {};
     Chat.vent = _.extend({}, Backbone.Events);
     Chat.encode = function(input) {
@@ -70,7 +70,8 @@ define([
                     }
                 }, 200);
             } else {
-                alert('Current room is not available');
+                Helper.Message.error('Current room is not available');
+                Helper.Message.info('Current room is not available');
             }
         } catch (e) {
             console.log(e);
