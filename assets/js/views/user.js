@@ -1,6 +1,6 @@
 define([
-    'underscore', 'backbone', 'models/user', 'chat'
-], function(_, Backbone, User, Chat) {
+    'underscore', 'backbone', 'models/user', 'chat', 'helper'
+], function(_, Backbone, User, Chat, Helper) {
     var UserView = Backbone.View.extend({
         model: User,
         template: '#user-tpl',
@@ -10,7 +10,7 @@ define([
             href: '#',
             'data-toggle': 'tooltip',
             'data-placement': 'right',
-            title: Chat.t('Send message')
+            title: Helper.t('Send message')
         },
         events: {
             'click': 'selectItem'

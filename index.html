@@ -3,8 +3,9 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>Chat</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pnotify/2.0.0/pnotify.core.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -15,7 +16,7 @@
                 <div class="col-md-12 jumbotron chat-container"></div>
                 <div class="col-md-12">
                     <div class="input-group">
-                        <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+                        <div class="input-group-addon"><i class="fa fa-envelope-o"></i></div>
                         <input type="text" id="chat-message" name="chat_message" class="form-control" placeholder="Enter Message">
                         <div class="input-group-btn">
                             <button type="button" id="send-msg" class="btn btn-primary">Send</button>
@@ -25,19 +26,18 @@
             </div>
             <div role="navigation" class="col-md-3">
                 <div id="chat-room-list" class="list-group">
-                    <h4><span class="glyphicon glyphicon-comment"></span>Chat Rooms</h4>
+                    <h4><i class="fa fa-weixin"></i>Chat Rooms</h4>
                     <div class="btn-group" role="group">
                         <button type="button" id="add-chat" class="btn btn-default">Add</button>
                         <button type="button" id="history-chat" class="btn btn-default">History</button>
-                        <button type="button" id="share-chat" class="btn btn-default">Share</button>
-                        <button type="button" id="exit-chat" class="btn btn-default"><span class="glyphicon glyphicon-log-out"></span>Exit</button>
+                        <button type="button" id="exit-chat" class="btn btn-default"><i class="fa fa-sign-out"></i>Exit</button>
                     </div>
                     <div class="list-group-container"></div>
                 </div>
             </div>
             <div role="navigation" class="col-md-3">
                 <div id="user-list" class="list-group">
-                    <h4><span class="glyphicon glyphicon-user"></span>Online Users</h4>
+                    <h4><i class="fa fa-users"></i>Online Users</h4>
                     <div class="list-group-container"></div>
                 </div>
             </div>

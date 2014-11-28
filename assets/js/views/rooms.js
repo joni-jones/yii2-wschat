@@ -1,6 +1,6 @@
 define([
-    'backbone', 'collections/rooms', 'views/room'
-], function(Backbone, Rooms, RoomItemView) {
+    'backbone', 'helper', 'collections/rooms', 'views/room'
+], function(Backbone, Helper, Rooms, RoomItemView) {
     var ChatRoomList = Backbone.View.extend({
         collection: Rooms,
         el: '#chat-room-list',

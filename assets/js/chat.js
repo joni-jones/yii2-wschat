@@ -12,21 +12,6 @@ define([
             return '&#' + i.charCodeAt(0) + ';';
         });
     };
-    Chat.dict = {
-        'ru': {
-            'New message from': 'Сообщение от',
-            'Connect to chat': 'Подключился к чату',
-            'Left this chat': 'Вышел из чата',
-            'Send message': 'Отправить сообщение'
-        }
-    };
-    Chat.t = function(message) {
-        var lang = $.cookie('chatLang') || 'en';
-        if (lang == 'en') {
-            return message;
-        }
-        return Chat.dict[lang][message];
-    };
     Chat.formatTime = function(time) {
         var pad = '00';
         var hours = '' + time.getHours();
@@ -71,7 +56,6 @@ define([
                 }, 200);
             } else {
                 Helper.Message.error('Current room is not available');
-                Helper.Message.info('Current room is not available');
             }
         } catch (e) {
             console.log(e);
@@ -92,7 +76,7 @@ define([
                 self.fillUsers(data.users, data.user);
             }
             var user = new User(data.user);
-            user.set('message', Chat.t('Connect to chat'));
+            user.set('message', Helper.t('Connect to chat'));
             user.set('type', 'warning');
             self.users.add(user);
             //set current user
@@ -108,7 +92,7 @@ define([
         });
         Chat.vent.on('user:remove', function(data) {
             var user = self.users.get(data.id);
-            user.set('message', Chat.t('Left this chat'));
+            user.set('message', Helper.t('Left this chat'));
             Chat.vent.trigger('message:add', user);
             self.users.remove(user);
         });
@@ -190,7 +174,7 @@ define([
             return;
         }
         Notification.requestPermission(function() {
-            var title = Chat.t('New message from') + ' ' + user.get('name');
+            var title = Helper.t('New message from') + ' ' + user.get('name');
             var msg = user.get('message');
             if (msg.length > 40) {
                 msg = msg.substring(0, 40) + '...';

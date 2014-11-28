@@ -8,7 +8,6 @@ define([
             var time = new Date();
             var msg = Chat.makeLink(Chat.encode(this.model.get('message')));
             this.model.set('timestamp', Chat.formatTime(time));
-            //message.set('message', Chat.encode(message.get('message')));
             this.model.set('message', msg);
             if (!this.model.get('type')) {
                 this.model.set('type', 'warning');
