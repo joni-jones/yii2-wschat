@@ -1,19 +1,24 @@
 {
-    "name": "joni-jones/ws-chat",
+    "name": "joni-jones/yii2-wschat",
     "description": "Online chat based on web sockets and ratchet php",
-    "keywords": ["websockets", "backbone", "ratchet"],
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","backbone","ratchet", "websocket"],
     "version": "0.0.2",
+    "license": "MIT",
     "minimum-stability": "dev",
-    "authors": [{
-        "name": "Ievgen Sentiabov",
-        "email": "ievgen.sentiabov@gmail.com"
-    }],
+    "authors": [
+        {
+            "name": "Ievgen Sentiabov",
+            "email": "ievgen.sentiabov@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*",
+        "cboden/ratchet": "0.3.*"
+    },
     "autoload": {
         "psr-4": {
-            "WSChat\\": "src/"
+            "jones\\wschat\\": ""
         }
-    },
-    "require": {
-        "cboden/ratchet": "0.3.*"
     }
 }
