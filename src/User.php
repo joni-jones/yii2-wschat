@@ -8,6 +8,9 @@ namespace WSChat;
 class User
 {
     public $id;
+    public $name;
+    public $avatar_16;
+    public $avatar_32;
     private $rid;
     /** @var ChatRoom */
     private $chat;
@@ -15,6 +18,12 @@ class User
     public function __construct()
     {
         $this->id = uniqid();
+        /**
+         * @TODO need to load user with real name
+         */
+        $num = rand(1, 100);
+        $this->name = 'user #'.$num;
+        $this->setAvatar($num);
     }
 
     /**
@@ -73,6 +82,20 @@ class User
     {
         $this->chat = $chat;
         $this->chat->addUser($this);
+    }
+
+    protected function setAvatar($num)
+    {
+        $image_32 = 'uploads/avatar_'.$num.'_32.png';
+        $image_16 = 'uploads/avatar_'.$num.'_16.png';
+        if (!file_exists(__DIR__.'/../'.$image_32)) {
+            $file = file_get_contents('http://www.gravatar.com/avatar/'.$num.'?s=32&d=identicon&r=g');
+            file_put_contents(__DIR__.'/../'.$image_32, $file);
+            $file = file_get_contents('http://www.gravatar.com/avatar/'.$num.'?s=16&d=identicon&r=g');
+            file_put_contents(__DIR__.'/../'.$image_16, $file);
+        }
+        $this->avatar_32 = $image_32;
+        $this->avatar_16 = $image_16;
     }
 }
  
