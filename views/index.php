@@ -40,6 +40,3 @@ ChatAsset::register($this);
 <?=$this->render('user');?>
 <?=$this->render('room');?>
 <?=$this->render('message');?>
-<?=Html::jsFile('assets/js/require.js', [
-    'data-main' => 'assets/app.js'
-]);?>

@@ -14,7 +14,7 @@ class ChatWidget extends Widget
      */
     public function run()
     {
-        return $this->render('views/index');
+        return $this->render('index');
     }
 }
  
