@@ -1,7 +1,5 @@
-define([
-    'jquery', 'pnotify'
-], function($) {
-    var Helper = {
+(function() {
+    window.Helper = {
         Message: {}
     };
     Helper.dict = {
@@ -42,4 +40,4 @@ define([
         new PNotify(opts);
     };
     return Helper;
-});
+}());
