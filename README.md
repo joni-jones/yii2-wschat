@@ -42,4 +42,8 @@ Usage
     
         yii server/run
         
-2. Not implemented
+2. To add chat on page just call:
+
+```
+<?=ChatWidget::widget();?>
+```
