@@ -1,13 +1,13 @@
 <?php
-namespace WSChat;
+namespace jones\wschat\components;
 
 /**
  * Class ChatManager
- * @package WSChat
+ * @package \jones\wschat\components
  */
 class ChatManager
 {
-    /** @var User[] */
+    /** @var \jones\wschat\components\User[] */
     private $users = [];
 
     /**
@@ -29,7 +29,7 @@ class ChatManager
      *
      * @access public
      * @param $rid
-     * @return null|ChatRoom
+     * @return \jones\wschat\components\ChatRoom|null
      */
     public function getUserChat($rid)
     {
@@ -44,7 +44,7 @@ class ChatManager
      * @access public
      * @param $chatId
      * @param $rid
-     * @return null|ChatRoom
+     * @return \jones\wschat\components\ChatRoom|null
      */
     public function findChat($chatId, $rid)
     {

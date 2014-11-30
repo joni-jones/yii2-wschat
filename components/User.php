@@ -1,20 +1,22 @@
 <?php
-namespace WSChat;
+namespace jones\wschat\components;
 
 /**
  * Class User
- * @package WSChat
+ * @package \jones\wschat\components
  */
 class User
 {
     public $id;
+    public $name;
     private $rid;
-    /** @var ChatRoom */
+    /** @var \jones\wschat\components\ChatRoom */
     private $chat;
 
     public function __construct()
     {
         $this->id = uniqid();
+        $this->name = 'name#'.rand(1, 100);
     }
 
     /**
@@ -55,7 +57,7 @@ class User
      * Get user chat room
      *
      * @access public
-     * @return ChatRoom
+     * @return \jones\wschat\components\ChatRoom
      */
     public function getChat()
     {
@@ -66,7 +68,7 @@ class User
      * Set chat room for user
      *
      * @access public
-     * @param ChatRoom $chat
+     * @param \jones\wschat\components\ChatRoom $chat
      * @return void
      */
     public function setChat(ChatRoom $chat)

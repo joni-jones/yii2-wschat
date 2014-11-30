@@ -20,3 +20,26 @@ or add
 ```
 
 to the require section of your `composer.json` file.
+
+Usage
+------------
+
+1. To start chat server need to create console command and setup it as demon:
+    
+    - Create controller which extends `yii\console\controller`:
+        
+        ServerController extends \yii\console\controller
+        
+    - Create action to start server:
+    
+        public function actionRun()
+        {
+            $server = IoServer::factory(new HttpServer(new WsServer(new Chat(new ChatManager()))), 8080);
+            $server->run();
+        }
+        
+    - Now, you can run chat server with `yii` console command:
+    
+        yii server/run
+        
+2. Not implemented

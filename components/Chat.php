@@ -1,18 +1,18 @@
 <?php
-namespace WSChat;
+namespace jones\wschat\components;
 
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
 
 /**
  * Class Chat
- * @package WSChat
+ * @package \jones\wschat\components
  */
 class Chat implements MessageComponentInterface
 {
     /** @var ConnectionInterface[] */
     private $clients = [];
-    /** @var ChatManager */
+    /** @var \jones\wschat\components\ChatManager */
     private $cm = null;
     /**
      * @var array list of available requests
@@ -22,7 +22,7 @@ class Chat implements MessageComponentInterface
     ];
 
     /**
-     * @param ChatManager $cm
+     * @param \jones\wschat\components\ChatManager $cm
      */
     public function __construct(ChatManager $cm)
     {

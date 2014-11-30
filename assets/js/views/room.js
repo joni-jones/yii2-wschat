@@ -13,9 +13,8 @@ Chat.Views.RoomItemView = Backbone.View.extend({
     render: function() {
         var template = _.template($(this.template).html());
         this.$el.html(template(this.model.toJSON()));
-        console.log(location);
         this.$el.attr({
-            'href': location.origin + location.pathname + '/?cid=' + this.model.get('id'),
+            'href': location.origin + location.pathname + '?cid=' + this.model.get('id'),
             'data-chat': this.model.get('id')
         });
         if (this.currentCid == this.model.get('id')) {
