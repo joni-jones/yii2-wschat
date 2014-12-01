@@ -98,7 +98,7 @@ class Chat implements MessageComponentInterface
      */
     private function authRequest($rid, array $data)
     {
-        $this->cm->addUser($rid, !empty($data['id']) ? $data['id'] : '');
+        $this->cm->addUser($rid, !empty($data['user']['id']) ? $data['user']['id'] : '');
         echo 'Auth request from user: '.$rid.' and chat: '.$data['cid'].PHP_EOL;
         $chat = $this->cm->findChat($data['cid'], $rid);
         echo 'Count of users: '.sizeof($chat->getUsers()).PHP_EOL;
