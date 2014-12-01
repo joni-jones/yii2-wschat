@@ -9,17 +9,20 @@ class ChatManager
 {
     /** @var \jones\wschat\components\User[] */
     private $users = [];
+    /** @var string a name of class to get user instance */
+    public $userClassName = null;
 
     /**
      * Add new user to manager
      *
      * @access public
      * @param $rid
+     * @param $id
      * @return void
      */
-    public function addUser($rid)
+    public function addUser($rid, $id)
     {
-        $user = new User();
+        $user = new User($id, $this->userClassName);
         $user->setRid($rid);
         $this->users[$rid] = $user;
     }

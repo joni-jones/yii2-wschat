@@ -2,6 +2,7 @@
 namespace jones\wschat\components;
 
 use Yii;
+use yii\base\InvalidParamException;
 
 /**
  * Class User
@@ -14,16 +15,41 @@ class User
     public $avatar_16;
     public $avatar_32;
     private $rid;
-    /** @var \jones\wschat\components\ChatRoom */
+    /** @var \jones\wschat\components\ChatRoom $chat */
     private $chat;
+    /** @var string */
+    private $modelClassName = null;
 
-    public function __construct()
+    /**
+     * @param $id
+     * @param string $modelClassName default null
+     */
+    public function __construct($id = null, $modelClassName = null)
     {
-        /**
-         * @TODO set id from real instance
-         */
-        $this->id = uniqid();
-        $this->setAvatar();
+        $this->id = $id;
+        $this->modelClassName = $modelClassName;
+        //setup model only if chat will be user for auth users
+        if ($this->id && $this->modelClassName) {
+            if (!in_array('findOne', (array)get_class_methods($this->modelClassName))) {
+                throw new InvalidParamException(Yii::t('app', 'Invalid model class name was specified'));
+            }
+            $this->init();
+        }
+    }
+
+    private function init()
+    {
+        $cache = Yii::$app->cache;
+        if ($cache->exists('user_'.$this->id)) {
+            Yii::configure($this, $cache->get('user_'.$this->id));
+        } else {
+            /** @var \yii\db\BaseActiveRecord $model */
+            $model = call_user_func_array([$this->modelClassName, 'findOne'], ['id' => $this->id]);
+            if (!$model) {
+                throw new InvalidParamException(Yii::t('app', 'User entity not found.'));
+            }
+            $cache->set('user_'.$this->id, $model->attributes());
+        }
     }
 
     /**

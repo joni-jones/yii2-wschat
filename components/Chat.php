@@ -37,7 +37,6 @@ class Chat implements MessageComponentInterface
         $rid = $this->getResourceId($conn);
         echo 'Connection is established: '.$rid.PHP_EOL;
         $this->clients[$rid] = $conn;
-        $this->cm->addUser($rid);
     }
 
     /**
@@ -72,6 +71,7 @@ class Chat implements MessageComponentInterface
      */
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
+        echo $e->getMessage().PHP_EOL;
         $conn->close();
     }
 
@@ -98,6 +98,7 @@ class Chat implements MessageComponentInterface
      */
     private function authRequest($rid, array $data)
     {
+        $this->cm->addUser($rid, !empty($data['id']) ? $data['id'] : '');
         echo 'Auth request from user: '.$rid.' and chat: '.$data['cid'].PHP_EOL;
         $chat = $this->cm->findChat($data['cid'], $rid);
         echo 'Count of users: '.sizeof($chat->getUsers()).PHP_EOL;

@@ -38,12 +38,19 @@ Usage
             $server->run();
         }
         
+    If you want to use chat for auth users, you must to specify `userClassName` property for `ChatManager` instance.
+    For example:
+    
+        
+        $manager = Yii::configure(new ChatManager(), [
+            'userClassName' => '\yii\db\ActiveRecord' //allow to get users from MySQL or PostgreSQL
+        ]);
+        
     - Now, you can run chat server with `yii` console command:
     
         yii server/run
         
 2. To add chat on page just call:
 
-```
-<?=ChatWidget::widget();?>
-```
+
+    <?=ChatWidget::widget();?>
