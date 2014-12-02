@@ -1,15 +1,16 @@
-Chat.Room = function (options) {
+Chat.Room = function(options) {
     this.conn = null;
     this.options = $.extend({
         url: location.host,
-        port: 8080
+        port: 8080,
+        currentUserId: ''
     }, options);
     this.active = false;
     this.users = new Chat.Collections.Users();
     this.currentUser = null;
     this.init();
 };
-Chat.Room.prototype.init = function () {
+Chat.Room.prototype.init = function() {
     var self = this;
     try {
         self.cid = $('#chat-room-list .active').attr('data-chat');
@@ -32,12 +33,12 @@ Chat.Room.prototype.init = function () {
     self.initLang();
     self.addEventsHandlers();
 };
-Chat.Room.prototype.initLang = function () {
+Chat.Room.prototype.initLang = function() {
     var lang = navigator.language || navigator.userLanguage;
     lang = lang.split('-');
     $.cookie('chatLang', lang[0], {expires: 1});
 };
-Chat.Room.prototype.addEventsHandlers = function () {
+Chat.Room.prototype.addEventsHandlers = function() {
     var self = this;
     Chat.vent.on('user:auth', function (data) {
         //if collection is empty - fill it
@@ -66,7 +67,7 @@ Chat.Room.prototype.addEventsHandlers = function () {
         self.users.remove(user);
     });
 };
-Chat.Room.prototype.addConnectionHandlers = function () {
+Chat.Room.prototype.addConnectionHandlers = function() {
     var self = this;
     self.conn.onclose = function (e) {
         if (!self.active) {
@@ -90,10 +91,10 @@ Chat.Room.prototype.addConnectionHandlers = function () {
         self.conn.close();
     });
 };
-Chat.Room.prototype.isFunction = function (name) {
+Chat.Room.prototype.isFunction = function(name) {
     return typeof name === 'function';
 };
-Chat.Room.prototype.onMessage = function (e) {
+Chat.Room.prototype.onMessage = function(e) {
     try {
         var response = JSON.parse(e.data);
         if (response.type == 'auth') {
@@ -118,26 +119,20 @@ Chat.Room.prototype.onClose = function (e) {
 Chat.Room.prototype.sendMessage = function (data) {
     this.send({type: 'message', data: {message: data}});
 };
-Chat.Room.prototype.auth = function () {
-    /**
-     * @TODO need to create model with real user data, maybe on server
-     * @TODO use simple json instead backbone model
-     */
-    var name = 'user #' + Math.floor(Math.random() * 100);
-    var user = new Chat.Models.User({name: name});
-    this.send({type: 'auth', data: {user: user.toJSON(), cid: this.cid}});
+Chat.Room.prototype.auth = function() {
+    this.send({type: 'auth', data: {user: {id: this.options.currentUserId}, cid: this.cid}});
 };
-Chat.Room.prototype.send = function (request) {
+Chat.Room.prototype.send = function(request) {
     this.conn.send(JSON.stringify(request));
 };
-Chat.Room.prototype.fillUsers = function (users, user) {
+Chat.Room.prototype.fillUsers = function(users, user) {
     for (var key in users) {
         if (key !== user.id) {
             this.users.add(users[key]);
         }
     }
 };
-Chat.Room.prototype.showNotification = function (user) {
+Chat.Room.prototype.showNotification = function(user) {
     var self = this;
     if (!('Notification' in window)) {
         return;

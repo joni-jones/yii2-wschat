@@ -7,11 +7,16 @@ use yii\base\InvalidParamException;
 /**
  * Class User
  * @package \jones\wschat\components
+ *
+ * @property mixed $id
+ * @property string $username
+ * @property string $avatar_16 url to avatar 16x16 image
+ * @property string $avatar_32 url to avatar 32x32 image
  */
 class User
 {
     public $id;
-    public $name;
+    public $username;
     public $avatar_16;
     public $avatar_32;
     private $rid;
@@ -34,21 +39,35 @@ class User
                 throw new InvalidParamException(Yii::t('app', 'Invalid model class name was specified'));
             }
             $this->init();
+        } else {
+            /**
+             * @TODO added just for testing
+             */
+            $this->id = uniqid();
+            $this->setAvatar();
         }
     }
 
     private function init()
     {
         $cache = Yii::$app->cache;
-        if ($cache->exists('user_'.$this->id)) {
-            Yii::configure($this, $cache->get('user_'.$this->id));
+        $cache->keyPrefix = 'user';
+        /**
+         * @TODO remove it after testing
+         */
+        $cache->delete($this->id);
+        if ($cache->exists($this->id)) {
+            Yii::configure($this, $cache->get($this->id));
         } else {
             /** @var \yii\db\BaseActiveRecord $model */
             $model = call_user_func_array([$this->modelClassName, 'findOne'], ['id' => $this->id]);
             if (!$model) {
                 throw new InvalidParamException(Yii::t('app', 'User entity not found.'));
             }
-            $cache->set('user_'.$this->id, $model->attributes());
+            /**
+             * @TODO set only safe attributes
+             */
+            $cache->set($this->id, $model->attributes);
         }
     }
 
@@ -116,7 +135,7 @@ class User
     protected function setAvatar()
     {
         $num = rand(1, 100);
-        $this->name = 'name #'.$num;
+        $this->username = 'name #'.$num;
         $dirPath = Yii::$app->basePath.'/web';
         $image_32 = '/uploads/avatar_'.$num.'_32.png';
         $image_16 = '/uploads/avatar_'.$num.'_16.png';

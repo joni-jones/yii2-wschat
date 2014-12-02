@@ -13,6 +13,24 @@ class ChatManager
     public $userClassName = null;
 
     /**
+     * Check if user exists in list
+     * return resource id if user in current list - else null
+     *
+     * @access private
+     * @param $id
+     * @return null|int
+     */
+    private function isUserExists($id)
+    {
+        foreach ($this->users as $rid => $user) {
+            if ($user->id == $id) {
+                return $rid;
+            }
+        }
+        return null;
+    }
+
+    /**
      * Add new user to manager
      *
      * @access public
@@ -22,6 +40,14 @@ class ChatManager
      */
     public function addUser($rid, $id)
     {
+        /**
+         * @TODO something wrong in this code
+         * @TODO error - get undefined index
+         */
+        //the same user opened one connection twice
+        if ($oldRid = $this->isUserExists($id)) {
+            $this->removeUserFromChat($oldRid);
+        }
         $user = new User($id, $this->userClassName);
         $user->setRid($rid);
         $this->users[$rid] = $user;
@@ -82,7 +108,7 @@ class ChatManager
      */
     public function getUserByRid($rid)
     {
-        return $this->users[$rid];
+        return !empty($this->users[$rid]) ? $this->users[$rid] : null;
     }
 
     /**
