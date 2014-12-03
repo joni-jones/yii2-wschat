@@ -28,40 +28,43 @@ class User
     /**
      * @param $id
      * @param string $modelClassName default null
+     * @param array $props array of properties for non auth chat users
      */
-    public function __construct($id = null, $modelClassName = null)
+    public function __construct($id = null, $modelClassName = null, array $props = [])
     {
         $this->id = $id;
         $this->modelClassName = $modelClassName;
-        //setup model only if chat will be user for auth users
-        if ($this->id && $this->modelClassName) {
-            if (!in_array('findOne', (array)get_class_methods($this->modelClassName))) {
-                throw new InvalidParamException(Yii::t('app', 'Model class should implements `findOne()` method'));
-            }
-            $this->init();
-        }
-    }
+        $this->init($props);
+}
 
     /**
      * Restore user attributes from cache or load it from
      * repository
      *
      * @access private
+     * @param array $props
      * @return void
      */
-    private function init()
+    private function init(array $props = [])
     {
         $cache = Yii::$app->cache;
         $cache->keyPrefix = 'user';
         if ($cache->exists($this->id)) {
             $attrs = $cache->get($this->id);
         } else {
-            /** @var \yii\db\BaseActiveRecord $model */
-            $model = call_user_func_array([$this->modelClassName, 'findOne'], ['id' => $this->id]);
-            if (!$model) {
-                throw new InvalidParamException(Yii::t('app', 'User entity not found.'));
+            if ($this->modelClassName) {
+                if (!in_array('findOne', (array)get_class_methods($this->modelClassName))) {
+                    throw new InvalidParamException(Yii::t('app', 'Model class should implements `findOne()` method'));
+                }
+                /** @var \yii\db\BaseActiveRecord $model */
+                $model = call_user_func_array([$this->modelClassName, 'findOne'], ['id' => $this->id]);
+                if (!$model) {
+                    throw new InvalidParamException(Yii::t('app', 'User entity not found.'));
+                }
+                $attrs = $model->attributes;
+            } else {
+                $attrs = $props;
             }
-            $attrs = $model->attributes;
             $cache->set($this->id, $attrs);
         }
         Yii::configure($this, $attrs);

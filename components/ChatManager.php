@@ -36,13 +36,14 @@ class ChatManager
      * Add new user to manager
      *
      * @access public
-     * @param $rid
-     * @param $id
+     * @param integer $rid
+     * @param mixed $id
+     * @param array $props
      * @return void
      */
-    public function addUser($rid, $id)
+    public function addUser($rid, $id, array $props = [])
     {
-        $user = new User($id, $this->userClassName);
+        $user = new User($id, $this->userClassName, $props);
         $user->setRid($rid);
         $this->users[$rid] = $user;
     }

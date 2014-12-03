@@ -106,7 +106,7 @@ class Chat implements MessageComponentInterface
         if ($oldRid = $this->cm->isUserExists($userId)) {
             $this->closeRequest($oldRid);
         }
-        $this->cm->addUser($rid, $userId);
+        $this->cm->addUser($rid, $userId, $data['user']);
         $chat = $this->cm->findChat($data['cid'], $rid);
         $users = $chat->getUsers();
         Yii::info('Count of users: '.sizeof($users), 'chat');
