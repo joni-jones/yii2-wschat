@@ -36,15 +36,9 @@ class User
         //setup model only if chat will be user for auth users
         if ($this->id && $this->modelClassName) {
             if (!in_array('findOne', (array)get_class_methods($this->modelClassName))) {
-                throw new InvalidParamException(Yii::t('app', 'Invalid model class name was specified'));
+                throw new InvalidParamException(Yii::t('app', 'Model class should implements `findOne()` method'));
             }
             $this->init();
-        } else {
-            /**
-             * @TODO added just for testing
-             */
-            $this->id = uniqid();
-            $this->setAvatar();
         }
     }
 
@@ -129,29 +123,6 @@ class User
     {
         $this->chat = $chat;
         $this->chat->addUser($this);
-    }
-
-    /**
-     * @TODO add real setter
-     */
-    protected function setAvatar()
-    {
-        $num = rand(1, 100);
-        $this->username = 'name #'.$num;
-        $dirPath = Yii::$app->basePath.'/web';
-        $image_32 = '/uploads/avatar_'.$num.'_32.png';
-        $image_16 = '/uploads/avatar_'.$num.'_16.png';
-        if (!file_exists($dirPath.$image_32)) {
-            if (!is_dir($dirPath.'/uploads')) {
-                mkdir($dirPath.'/uploads');
-            }
-            $file = file_get_contents('http://www.gravatar.com/avatar/'.$num.'?s=32&d=identicon&r=g');
-            file_put_contents($dirPath.$image_32, $file);
-            $file = file_get_contents('http://www.gravatar.com/avatar/'.$num.'?s=16&d=identicon&r=g');
-            file_put_contents($dirPath.$image_16, $file);
-        }
-        $this->avatar_32 = $image_32;
-        $this->avatar_16 = $image_16;
     }
 }
  
