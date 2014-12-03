@@ -1,8 +1,3 @@
-define([
-    'backbone'
-], function(Backbone) {
-    var ChatRoom = Backbone.Model.extend({
-        defaults: {id: '', name: ''}
-    });
-    return ChatRoom;
+Chat.Models.ChatRoom = Backbone.Model.extend({
+    defaults: {id: '', name: ''}
 });

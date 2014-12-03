@@ -1,18 +1,20 @@
 <?php
-namespace WSChat;
+namespace jones\wschat\components;
 
+use Yii;
+use yii\helpers\json;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
 
 /**
  * Class Chat
- * @package WSChat
+ * @package \jones\wschat\components
  */
 class Chat implements MessageComponentInterface
 {
     /** @var ConnectionInterface[] */
     private $clients = [];
-    /** @var ChatManager */
+    /** @var \jones\wschat\components\ChatManager */
     private $cm = null;
     /**
      * @var array list of available requests
@@ -22,7 +24,7 @@ class Chat implements MessageComponentInterface
     ];
 
     /**
-     * @param ChatManager $cm
+     * @param \jones\wschat\components\ChatManager $cm
      */
     public function __construct(ChatManager $cm)
     {
@@ -35,9 +37,8 @@ class Chat implements MessageComponentInterface
     public function onOpen(ConnectionInterface $conn)
     {
         $rid = $this->getResourceId($conn);
-        echo 'Connection is established: '.$rid.PHP_EOL;
         $this->clients[$rid] = $conn;
-        $this->cm->addUser($rid);
+        Yii::info('Connection is established: '.$rid, 'chat');
     }
 
     /**
@@ -46,7 +47,7 @@ class Chat implements MessageComponentInterface
      */
     public function onMessage(ConnectionInterface $from, $msg)
     {
-        $data = json_decode($msg, true);
+        $data = Json::decode($msg, true);
         $rid = array_search($from, $this->clients);
         if (in_array($data['type'], $this->requests)) {
             call_user_func_array([$this, $data['type'].'Request'], [$rid, $data['data']]);
@@ -59,11 +60,11 @@ class Chat implements MessageComponentInterface
     public function onClose(ConnectionInterface $conn)
     {
         $rid = array_search($conn, $this->clients);
-        echo 'Connection is closed '.$rid.PHP_EOL;
         if ($this->cm->getUserByRid($rid)) {
             $this->closeRequest($rid);
         }
         unset($this->clients[$rid]);
+        Yii::info('Connection is closed: '.$rid, 'chat');
     }
 
     /**
@@ -72,6 +73,7 @@ class Chat implements MessageComponentInterface
      */
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
+        Yii::error($e->getMessage());
         $conn->close();
     }
 
@@ -98,10 +100,17 @@ class Chat implements MessageComponentInterface
      */
     private function authRequest($rid, array $data)
     {
-        echo 'Auth request from user: '.$rid.' and chat: '.$data['cid'].PHP_EOL;
-        $chat = $this->cm->findChat($data['cid'], $rid);
-        echo 'Count of users: '.sizeof($chat->getUsers()).PHP_EOL;
+        $chatId = $data['cid'];
+        Yii::info('Auth request from rid: '.$rid.' and chat: '.$chatId, 'chat');
+        $userId = !empty($data['user']['id']) ? $data['user']['id'] : '';
+        //the same user already connected to current chat, need to close old connect
+        if ($oldRid = $this->cm->isUserExistsInChat($userId, $chatId)) {
+            $this->closeRequest($oldRid);
+        }
+        $this->cm->addUser($rid, $userId, $data['user']);
+        $chat = $this->cm->findChat($chatId, $rid);
         $users = $chat->getUsers();
+        Yii::info('Count of users: '.sizeof($users), 'chat');
         $response = [
             'user' => $this->cm->getUserByRid($rid),
             'users' => $users,
@@ -109,7 +118,7 @@ class Chat implements MessageComponentInterface
         ];
         foreach ($users as $user) {
             $conn = $this->clients[$user->getRid()];
-            $conn->send(json_encode(['type' => 'auth', 'data' => $response]));
+            $conn->send(Json::encode(['type' => 'auth', 'data' => $response]));
         }
     }
 
@@ -124,10 +133,9 @@ class Chat implements MessageComponentInterface
      */
     private function messageRequest($rid, array $data)
     {
-        echo 'Message from: '.$rid.PHP_EOL;
+        Yii::info('Message from: '.$rid, 'chat');
         $chat = $this->cm->getUserChat($rid);
         if (!$chat) {
-            echo 'Chat for '.$rid.' not found'.PHP_EOL;
             return;
         }
         foreach ($chat->getUsers() as $user) {
@@ -136,7 +144,7 @@ class Chat implements MessageComponentInterface
                 continue;
             }
             $conn = $this->clients[$user->getRid()];
-            $conn->send(json_encode(['type' => 'message', 'data' => $data]));
+            $conn->send(Json::encode(['type' => 'message', 'data' => $data]));
         }
     }
 
@@ -162,7 +170,7 @@ class Chat implements MessageComponentInterface
         );
         foreach ($users as $user) {
             $conn = $this->clients[$user->getRid()];
-            $conn->send(json_encode($response));
+            $conn->send(Json::encode($response));
         }
     }
 }

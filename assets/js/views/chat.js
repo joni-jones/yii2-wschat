@@ -1,7 +1,4 @@
-define([
-    'underscore', 'backbone', 'chat', 'views/message'
-], function(_, Backbone, Chat, Message) {
-    var ChatView = Backbone.View.extend({
+Chat.Views.ChatView = Backbone.View.extend({
         el: '.chat-wrapper',
         events: {
             'click #send-msg': 'sendMessage',
@@ -19,7 +16,7 @@ define([
             Chat.vent.on('user:select', self.selectUser, self);
         },
         renderMessage: function(message) {
-            var msg = new Message({model: message});
+            var msg = new Chat.Views.Message({model: message});
             var $container = this.$el.find('.chat-container');
             $container.append(msg.render().el);
             $container.animate({
@@ -50,5 +47,3 @@ define([
             }
         }
     });
-    return ChatView;
-});

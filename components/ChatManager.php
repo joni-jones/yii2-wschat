@@ -1,25 +1,50 @@
 <?php
-namespace WSChat;
+namespace jones\wschat\components;
+
+use Yii;
 
 /**
  * Class ChatManager
- * @package WSChat
+ * @package \jones\wschat\components
  */
 class ChatManager
 {
-    /** @var User[] */
+    /** @var \jones\wschat\components\User[] */
     private $users = [];
+    /** @var string a namespace of class to get user instance */
+    public $userClassName = null;
+
+    /**
+     * Check if user exists in list
+     * return resource id if user in current chat - else null
+     *
+     * @access private
+     * @param $id
+     * @param $chatId
+     * @return null|int
+     */
+    public function isUserExistsInChat($id, $chatId)
+    {
+        foreach ($this->users as $rid => $user) {
+            if ($user->id == $id && $user->getChat()->getUid() == $chatId) {
+                return $rid;
+            }
+        }
+        return null;
+    }
 
     /**
      * Add new user to manager
      *
      * @access public
-     * @param $rid
+     * @param integer $rid
+     * @param mixed $id
+     * @param array $props
      * @return void
      */
-    public function addUser($rid)
+    public function addUser($rid, $id, array $props = [])
     {
-        $user = new User();
+        $user = new User($id, $this->userClassName, $props);
         $user->setRid($rid);
         $this->users[$rid] = $user;
     }
@@ -29,7 +54,7 @@ class ChatManager
      *
      * @access public
      * @param $rid
-     * @return null|ChatRoom
+     * @return \jones\wschat\components\ChatRoom|null
      */
     public function getUserChat($rid)
     {
@@ -44,7 +69,7 @@ class ChatManager
      * @access public
      * @param $chatId
      * @param $rid
-     * @return null|ChatRoom
+     * @return \jones\wschat\components\ChatRoom|null
      */
     public function findChat($chatId, $rid)
     {
@@ -57,12 +82,12 @@ class ChatManager
             }
             if ($userChat->getUid() == $chatId) {
                 $chat = $userChat;
-                echo 'User('.$rid.') will be joined to '.$chatId.PHP_EOL;
+                Yii::info('User('.$user->id.') will be joined to: '.$chatId, 'chat');
                 break;
             }
         }
         if (!$chat) {
-            echo 'Create new chat room: '.$chatId.' for user('.$rid.')'.PHP_EOL;
+            Yii::info('New chat room: '.$chatId.' for user: '.$storedUser->id, 'chat');
             $chat = new ChatRoom();
             $chat->setUid($chatId);
         }
@@ -79,7 +104,7 @@ class ChatManager
      */
     public function getUserByRid($rid)
     {
-        return $this->users[$rid];
+        return !empty($this->users[$rid]) ? $this->users[$rid] : null;
     }
 
     /**
@@ -92,6 +117,9 @@ class ChatManager
     public function removeUserFromChat($rid)
     {
         $user = $this->getUserByRid($rid);
+        if (!$user) {
+            return;
+        }
         $chat = $user->getChat();
         if ($chat) {
             $chat->removeUser($user);

@@ -1,18 +1,31 @@
-define([
-    'jquery', 'chat', 'collections/rooms', 'views/chat', 'views/users',
-    'views/rooms', 'bootstrap'
-], function($, Chat, Rooms, ChatView, UserListView, RoomListView) {
+/**
+ * @var currentUserId set in ChatWidget default value 0
+ * @var port set in ChatWidget default value 8080
+ */
+$(document).ready(function() {
     $('body').tooltip({selector: '[data-toggle="tooltip"]'});
     /*
      * @TODO add rooms list from real store
      */
-    var rooms = new Rooms([
+    var rooms = new Chat.Collections.Rooms([
         {id: 1, name: 'Room #1'}, {id: 2, name: 'Room #2'}, {id: 3, name: 'Room #3'}
     ]);
-    var roomListView = new RoomListView({collection: rooms});
+    var roomListView = new Chat.Views.ChatRoomList({collection: rooms});
     roomListView.render();
+
     //create chat after rooms loading
-    var chat = new Chat.Room();
-    var chatView = new ChatView();
-    var userListView = new UserListView({collection: chat.users});
+    currentUserId = currentUserId || $.cookie('chatUserId');
+    var chat = new Chat.Room({port: port, currentUserId: currentUserId});
+    if (!currentUserId) {
+        var addUserView = new Chat.Views.AddUserView();
+        addUserView.show();
+        Chat.vent.on('user:set_username', function(username) {
+            chat.options.username = username;
+            chat.init();
+        });
+    } else {
+        chat.init();
+    }
+    var chatView = new Chat.Views.ChatView();
+    var userListView = new Chat.Views.UserListView({collection: chat.users});
 });
