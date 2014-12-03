@@ -1,6 +1,7 @@
 <?php
 namespace jones\wschat\components;
 
+use yii\helpers\json;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
 
@@ -45,7 +46,7 @@ class Chat implements MessageComponentInterface
      */
     public function onMessage(ConnectionInterface $from, $msg)
     {
-        $data = json_decode($msg, true);
+        $data = Json::decode($msg, true);
         $rid = array_search($from, $this->clients);
         if (in_array($data['type'], $this->requests)) {
             call_user_func_array([$this, $data['type'].'Request'], [$rid, $data['data']]);
@@ -110,7 +111,7 @@ class Chat implements MessageComponentInterface
         ];
         foreach ($users as $user) {
             $conn = $this->clients[$user->getRid()];
-            $conn->send(json_encode(['type' => 'auth', 'data' => $response]));
+            $conn->send(Json::encode(['type' => 'auth', 'data' => $response]));
         }
     }
 
@@ -137,7 +138,7 @@ class Chat implements MessageComponentInterface
                 continue;
             }
             $conn = $this->clients[$user->getRid()];
-            $conn->send(json_encode(['type' => 'message', 'data' => $data]));
+            $conn->send(Json::encode(['type' => 'message', 'data' => $data]));
         }
     }
 
@@ -163,7 +164,7 @@ class Chat implements MessageComponentInterface
         );
         foreach ($users as $user) {
             $conn = $this->clients[$user->getRid()];
-            $conn->send(json_encode($response));
+            $conn->send(Json::encode($response));
         }
     }
 }
