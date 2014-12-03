@@ -1,6 +1,8 @@
 <?php
 namespace jones\wschat\components;
 
+use Yii;
+
 /**
  * Class ChatManager
  * @package \jones\wschat\components
@@ -9,7 +11,7 @@ class ChatManager
 {
     /** @var \jones\wschat\components\User[] */
     private $users = [];
-    /** @var string a name of class to get user instance */
+    /** @var string a namespace of class to get user instance */
     public $userClassName = null;
 
     /**
@@ -20,7 +22,7 @@ class ChatManager
      * @param $id
      * @return null|int
      */
-    private function isUserExists($id)
+    public function isUserExists($id)
     {
         foreach ($this->users as $rid => $user) {
             if ($user->id == $id) {
@@ -40,14 +42,6 @@ class ChatManager
      */
     public function addUser($rid, $id)
     {
-        /**
-         * @TODO something wrong in this code
-         * @TODO error - get undefined index
-         */
-        //the same user opened one connection twice
-        if ($oldRid = $this->isUserExists($id)) {
-            $this->removeUserFromChat($oldRid);
-        }
         $user = new User($id, $this->userClassName);
         $user->setRid($rid);
         $this->users[$rid] = $user;
@@ -86,12 +80,12 @@ class ChatManager
             }
             if ($userChat->getUid() == $chatId) {
                 $chat = $userChat;
-                echo 'User('.$rid.') will be joined to '.$chatId.PHP_EOL;
+                Yii::info('User('.$user->id.') will be joined to: '.$chatId, 'chat');
                 break;
             }
         }
         if (!$chat) {
-            echo 'Create new chat room: '.$chatId.' for user('.$rid.')'.PHP_EOL;
+            Yii::info('New chat room: '.$chatId.' for user: '.$storedUser->id, 'chat');
             $chat = new ChatRoom();
             $chat->setUid($chatId);
         }
@@ -121,6 +115,9 @@ class ChatManager
     public function removeUserFromChat($rid)
     {
         $user = $this->getUserByRid($rid);
+        if (!$user) {
+            return;
+        }
         $chat = $user->getChat();
         if ($chat) {
             $chat->removeUser($user);

@@ -1,6 +1,7 @@
 <?php
 namespace jones\wschat\components;
 
+use Yii;
 use yii\helpers\json;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
@@ -36,8 +37,8 @@ class Chat implements MessageComponentInterface
     public function onOpen(ConnectionInterface $conn)
     {
         $rid = $this->getResourceId($conn);
-        echo 'Connection is established: '.$rid.PHP_EOL;
         $this->clients[$rid] = $conn;
+        Yii::info('Connection is established: '.$rid, 'chat');
     }
 
     /**
@@ -59,11 +60,11 @@ class Chat implements MessageComponentInterface
     public function onClose(ConnectionInterface $conn)
     {
         $rid = array_search($conn, $this->clients);
-        echo 'Connection is closed '.$rid.PHP_EOL;
         if ($this->cm->getUserByRid($rid)) {
             $this->closeRequest($rid);
         }
         unset($this->clients[$rid]);
+        Yii::info('Connection is closed: '.$rid, 'chat');
     }
 
     /**
@@ -72,7 +73,7 @@ class Chat implements MessageComponentInterface
      */
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
-        echo $e->getMessage().PHP_EOL;
+        Yii::error($e->getMessage());
         $conn->close();
     }
 
@@ -99,11 +100,16 @@ class Chat implements MessageComponentInterface
      */
     private function authRequest($rid, array $data)
     {
-        $this->cm->addUser($rid, !empty($data['user']['id']) ? $data['user']['id'] : '');
-        echo 'Auth request from user: '.$rid.' and chat: '.$data['cid'].PHP_EOL;
+        Yii::info('Auth request from rid: '.$rid.' and chat: '.$data['cid'], 'chat');
+        $userId = !empty($data['user']['id']) ? $data['user']['id'] : '';
+        //the same user already connected, need to close old connect
+        if ($oldRid = $this->cm->isUserExists($userId)) {
+            $this->closeRequest($oldRid);
+        }
+        $this->cm->addUser($rid, $userId);
         $chat = $this->cm->findChat($data['cid'], $rid);
-        echo 'Count of users: '.sizeof($chat->getUsers()).PHP_EOL;
         $users = $chat->getUsers();
+        Yii::info('Count of users: '.sizeof($users), 'chat');
         $response = [
             'user' => $this->cm->getUserByRid($rid),
             'users' => $users,
@@ -126,10 +132,9 @@ class Chat implements MessageComponentInterface
      */
     private function messageRequest($rid, array $data)
     {
-        echo 'Message from: '.$rid.PHP_EOL;
+        Yii::info('Message from: '.$rid, 'chat');
         $chat = $this->cm->getUserChat($rid);
         if (!$chat) {
-            echo 'Chat for '.$rid.' not found'.PHP_EOL;
             return;
         }
         foreach ($chat->getUsers() as $user) {
