@@ -100,14 +100,15 @@ class Chat implements MessageComponentInterface
      */
     private function authRequest($rid, array $data)
     {
-        Yii::info('Auth request from rid: '.$rid.' and chat: '.$data['cid'], 'chat');
+        $chatId = $data['cid'];
+        Yii::info('Auth request from rid: '.$rid.' and chat: '.$chatId, 'chat');
         $userId = !empty($data['user']['id']) ? $data['user']['id'] : '';
-        //the same user already connected, need to close old connect
-        if ($oldRid = $this->cm->isUserExists($userId)) {
+        //the same user already connected to current chat, need to close old connect
+        if ($oldRid = $this->cm->isUserExistsInChat($userId, $chatId)) {
             $this->closeRequest($oldRid);
         }
         $this->cm->addUser($rid, $userId, $data['user']);
-        $chat = $this->cm->findChat($data['cid'], $rid);
+        $chat = $this->cm->findChat($chatId, $rid);
         $users = $chat->getUsers();
         Yii::info('Count of users: '.sizeof($users), 'chat');
         $response = [

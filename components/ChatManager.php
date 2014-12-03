@@ -16,16 +16,17 @@ class ChatManager
 
     /**
      * Check if user exists in list
-     * return resource id if user in current list - else null
+     * return resource id if user in current chat - else null
      *
      * @access private
      * @param $id
+     * @param $chatId
      * @return null|int
      */
-    public function isUserExists($id)
+    public function isUserExistsInChat($id, $chatId)
     {
         foreach ($this->users as $rid => $user) {
-            if ($user->id == $id) {
+            if ($user->id == $id && $user->getChat()->getUid() == $chatId) {
                 return $rid;
             }
         }
