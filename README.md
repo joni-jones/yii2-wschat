@@ -54,3 +54,19 @@ Usage
 
 
     <?=ChatWidget::widget();?>
+    
+    
+or if you want to use chat for auth users just add config as parameter:
+    
+    
+    <?=ChatWidget::widget([
+        'auth' => true,
+        'user_id' => '' // setup id of current logged user
+    ]);?>
+    
+List of available options:
+    
+    
+    auth - default false
+    user_id - default null
+    port - default 8080

@@ -3,18 +3,23 @@ Chat.Room = function(options) {
     this.options = $.extend({
         url: location.host,
         port: 8080,
-        currentUserId: ''
+        currentUserId: '',
+        username: ''
     }, options);
     this.active = false;
     this.users = new Chat.Collections.Users();
     this.currentUser = null;
-    this.init();
 };
 Chat.Room.prototype.init = function() {
     var self = this;
     try {
         self.cid = $('#chat-room-list .active').attr('data-chat');
         if (self.cid) {
+            //if user id is not set - need to generate it(used for non auth users chat)
+            if (!self.options.currentUserId) {
+                self.options.currentUserId = Helper.uid();
+                $.cookie('chatUserId', self.options.currentUserId);
+            }
             self.conn = new WebSocket('ws://' + self.options.url + ':' + self.options.port);
             self.addConnectionHandlers();
             //set current chat room, by default - all
@@ -120,7 +125,8 @@ Chat.Room.prototype.sendMessage = function (data) {
     this.send({type: 'message', data: {message: data}});
 };
 Chat.Room.prototype.auth = function() {
-    this.send({type: 'auth', data: {user: {id: this.options.currentUserId}, cid: this.cid}});
+    var user = new Chat.Models.User({id: this.options.currentUserId, username: this.options.username});
+    this.send({type: 'auth', data: {user: user.toJSON(), cid: this.cid}});
 };
 Chat.Room.prototype.send = function(request) {
     this.conn.send(JSON.stringify(request));

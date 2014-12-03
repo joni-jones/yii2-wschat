@@ -2,6 +2,7 @@
 namespace jones\wschat;
 
 use yii\base\Widget;
+use yii\web\View;
 
 /**
  * Class ChatWidget
@@ -10,11 +11,36 @@ use yii\base\Widget;
 class ChatWidget extends Widget
 {
     /**
+     * @var boolean set to true if widget will be run for auth users
+     */
+    public $auth = false;
+    public $user_id = null;
+    public $view = 'index';
+    /** @var int $port web socket port */
+    public $port = 8080;
+
+    /**
      * @override
      */
     public function run()
     {
-        return $this->render('index');
+        $this->registerJsOptions();
+        return $this->render($this->view, ['auth' => $this->auth]);
+    }
+
+    /**
+     * Register js variables
+     *
+     * @access protected
+     * @return void
+     */
+    protected function registerJsOptions()
+    {
+        $opts = [
+            'var currentUserId = '.($this->user_id ?: 0).';',
+            'var port = '.$this->port.';'
+        ];
+        $this->getView()->registerJs(implode(' ', $opts), View::POS_BEGIN);
     }
 }
  
