@@ -48,27 +48,29 @@ class User
         }
     }
 
+    /**
+     * Restore user attributes from cache or load it from
+     * repository
+     *
+     * @access private
+     * @return void
+     */
     private function init()
     {
         $cache = Yii::$app->cache;
         $cache->keyPrefix = 'user';
-        /**
-         * @TODO remove it after testing
-         */
-        $cache->delete($this->id);
         if ($cache->exists($this->id)) {
-            Yii::configure($this, $cache->get($this->id));
+            $attrs = $cache->get($this->id);
         } else {
             /** @var \yii\db\BaseActiveRecord $model */
             $model = call_user_func_array([$this->modelClassName, 'findOne'], ['id' => $this->id]);
             if (!$model) {
                 throw new InvalidParamException(Yii::t('app', 'User entity not found.'));
             }
-            /**
-             * @TODO set only safe attributes
-             */
-            $cache->set($this->id, $model->attributes);
+            $attrs = $model->attributes;
+            $cache->set($this->id, $attrs);
         }
+        Yii::configure($this, $attrs);
     }
 
     /**
