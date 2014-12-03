@@ -28,36 +28,42 @@ Usage
     
     - Create controller which extends `yii\console\controller`:
         
+        ```php
         ServerController extends \yii\console\controller
+        ```
         
     - Create action to start server:
     
+        ```php
         public function actionRun()
         {
             $server = IoServer::factory(new HttpServer(new WsServer(new Chat(new ChatManager()))), 8080);
             $server->run();
         }
+        ```
         
     If you want to use chat for auth users, you must to specify `userClassName` property for `ChatManager` instance.
     For example:
     
-        
         $manager = Yii::configure(new ChatManager(), [
             'userClassName' => '\yii\db\ActiveRecord' //allow to get users from MySQL or PostgreSQL
         ]);
         
     - Now, you can run chat server with `yii` console command:
     
+        ```php
         yii server/run
+        ```
         
 2. To add chat on page just call:
 
 
+    ```php
     <?=ChatWidget::widget();?>
+    ```
     
     
 or if you want to use chat for auth users just add config as parameter:
-    
     
     <?=ChatWidget::widget([
         'auth' => true,
