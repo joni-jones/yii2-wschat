@@ -42,7 +42,9 @@ Chat.Views.ChatView = Backbone.View.extend({
             }
         },
         selectUser: function(name) {
-            if (this.model.get('name') != name) {
+            console.log(this.model);
+            console.log(name);
+            if (this.model.get('username') != name) {
                 this.$el.find(this.input).val('@' + name + ':');
             }
         }
