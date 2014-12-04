@@ -2,7 +2,8 @@ Chat.Views.ChatRoomList = Backbone.View.extend({
     collection: Chat.Collections.Rooms,
     el: '#chat-room-list',
     events: {
-        'click #add-chat': 'showChatModal'
+        'click #add-chat': 'showChatModal',
+        'click #exit-chat': 'logout'
     },
     initialize: function() {
         this.collection.on('add', this.addRoom, this);
@@ -24,5 +25,8 @@ Chat.Views.ChatRoomList = Backbone.View.extend({
     },
     showChatModal: function() {
         this.chatModalView.show();
+    },
+    logout: function() {
+        location.href = (location.origin);
     }
 });
