@@ -1,3 +1,3 @@
 <script id="room-tpl" type="text/template">
-    <%=name%>
+    <%=title%>
 </script>

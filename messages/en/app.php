@@ -11,4 +11,6 @@ return [
     'Add User' => '',
     'Close' => '',
     'Username' => '',
+    'Add Room' => '',
+    'Title' => '',
 ];

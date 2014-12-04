@@ -39,6 +39,7 @@ ChatAsset::register($this);
 </div>
 <?=$this->render('user');?>
 <?=$this->render('room');?>
+<?=$this->render('add_room');?>
 <?=$this->render('message');?>
 <?php if(!$auth):?>
     <?=$this->render('add_user');?>

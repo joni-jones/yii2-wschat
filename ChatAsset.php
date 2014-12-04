@@ -30,6 +30,7 @@ class ChatAsset extends AssetBundle
         'js/views/message.js',
         'js/views/chat.js',
         'js/views/room.js',
+        'js/views/add_room.js',
         'js/views/rooms.js',
         'js/views/user.js',
         'js/views/add_user.js',

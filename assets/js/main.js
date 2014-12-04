@@ -1,15 +1,11 @@
 /**
  * @var currentUserId set in ChatWidget default value 0
  * @var port set in ChatWidget default value 8080
+ * @var chatList array of objects set in ChatWidget
  */
 $(document).ready(function() {
     $('body').tooltip({selector: '[data-toggle="tooltip"]'});
-    /*
-     * @TODO add rooms list from real store
-     */
-    var rooms = new Chat.Collections.Rooms([
-        {id: 1, name: 'Room #1'}, {id: 2, name: 'Room #2'}, {id: 3, name: 'Room #3'}
-    ]);
+    var rooms = new Chat.Collections.Rooms(chatList);
     var roomListView = new Chat.Views.ChatRoomList({collection: rooms});
     roomListView.render();
 

@@ -3,6 +3,7 @@ namespace jones\wschat;
 
 use yii\base\Widget;
 use yii\web\View;
+use yii\helpers\json;
 
 /**
  * Class ChatWidget
@@ -18,6 +19,11 @@ class ChatWidget extends Widget
     public $view = 'index';
     /** @var int $port web socket port */
     public $port = 8080;
+    /** @var array $chatList list of preloaded chats */
+    public $chatList = [
+        'id' => 1,
+        'title' => 'All'
+    ];
 
     /**
      * @override
@@ -38,7 +44,8 @@ class ChatWidget extends Widget
     {
         $opts = [
             'var currentUserId = '.($this->user_id ?: 0).';',
-            'var port = '.$this->port.';'
+            'var port = '.$this->port.';',
+            'var chatList = '.Json::encode($this->chatList),
         ];
         $this->getView()->registerJs(implode(' ', $opts), View::POS_BEGIN);
     }
