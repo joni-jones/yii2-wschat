@@ -23,8 +23,8 @@ Chat.Room.prototype.init = function() {
             self.conn = new WebSocket('ws://' + self.options.url + ':' + self.options.port);
             self.addConnectionHandlers();
             //set current chat room, by default - all
-            var timer = setInterval(function () {
-                if (self.conn.readyState) {
+            var timer = setInterval(function() {
+                if (self.conn.readyState == 1) {
                     self.auth();
                     clearInterval(timer);
                 }
@@ -83,7 +83,7 @@ Chat.Room.prototype.addConnectionHandlers = function() {
         }
     };
     self.conn.onerror = function (e) {
-        console.log('error');
+        Helper.Message.error('Current room is not available');
         self.conn.close();
     };
     self.conn.onmessage = function (e) {
