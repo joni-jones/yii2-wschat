@@ -7,6 +7,7 @@ namespace jones\wschat\components;
  */
 class ChatRoom
 {
+    public $title;
     /** @var string */
     private $uid;
     /** @var \jones\wschat\components\User[] */

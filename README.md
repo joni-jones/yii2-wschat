@@ -24,7 +24,19 @@ to the require section of your `composer.json` file.
 Usage
 ------------
 
-1. To start chat server need to create console command and setup it as demon:
+1. Chat use [MongoDB](http://docs.mongodb.org/) and [yii2-mongodb](http://www.yiiframework.com/doc-2.0/ext-mongodb-index.html)
+extension to store messages history, so you need just specify connection in `console` config:
+
+    ```php
+    'components' => [
+        'mongodb' => [
+            'class' => '\yii\mongodb\Connection',
+            'dsn' => 'mongodb://username:password@localhost:27017/dbname'
+        ]
+    ]
+    ```
+
+2. To start chat server need to create console command and setup it as demon:
     
     - Create controller which extends `yii\console\controller`:
         
@@ -57,7 +69,7 @@ Usage
         yii server/run
         ```
         
-2. To add chat on page just call:
+3. To add chat on page just call:
 
     ```php
     <?=ChatWidget::widget();?>

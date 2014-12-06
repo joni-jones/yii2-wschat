@@ -2,6 +2,7 @@
 namespace jones\wschat\components;
 
 use Yii;
+use jones\wschat\collections\History;
 
 /**
  * Class ChatManager
@@ -125,6 +126,31 @@ class ChatManager
             $chat->removeUser($user);
         }
         unset($this->users[$rid]);
+    }
+
+    /**
+     * Store chat message
+     *
+     * @access public
+     * @param \jones\wschat\components\User $user
+     * @param \jones\wschat\components\ChatRoom $chat
+     * @param string $message
+     */
+    public function storeMessage(User $user, ChatRoom $chat, $message)
+    {
+		try {
+			$collection = Yii::$app->mongodb->getCollection(History::collectionName());
+			$collection->insert([
+				'chat_id' => $chat->getUid(),
+				'chat_title' => $chat->title,
+				'user_id' => $user->getId(),
+				'username' => $user->username,
+				'message' => $message,
+				'timestamp' => time()
+			]);
+		} catch (\yii\mongodb\Exception $e) {
+			Yii::error($e->getMessage());
+		}
     }
 }
  

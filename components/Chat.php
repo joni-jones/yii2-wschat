@@ -138,6 +138,8 @@ class Chat implements MessageComponentInterface
         if (!$chat) {
             return;
         }
+        $user = $this->cm->getUserByRid($rid);
+        $this->cm->storeMessage($user, $chat, $data['message']['message']);
         foreach ($chat->getUsers() as $user) {
             //need not to send message for self
             if ($user->getRid() == $rid) {
