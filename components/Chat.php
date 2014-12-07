@@ -110,16 +110,26 @@ class Chat implements MessageComponentInterface
         $this->cm->addUser($rid, $userId, $data['user']);
         $chat = $this->cm->findChat($chatId, $rid);
         $users = $chat->getUsers();
-        Yii::info('Count of users: '.sizeof($users), 'chat');
+        $joinedUser = $this->cm->getUserByRid($rid);
         $response = [
-            'user' => $this->cm->getUserByRid($rid),
-            'users' => $users,
+            'user' => $joinedUser,
             'join' => true,
         ];
         foreach ($users as $user) {
-            $conn = $this->clients[$user->getRid()];
-            $conn->send(Json::encode(['type' => 'auth', 'data' => $response]));
+            //send message for other users of this chat
+            if ($userId != $user->getId()) {
+                $conn = $this->clients[$user->getRid()];
+                $conn->send(Json::encode(['type' => 'auth', 'data' => $response]));
+            }
         }
+        //send auth response for joined user
+        $response = [
+            'user' => $joinedUser,
+            'users' => $users,
+            'history' => []
+        ];
+        $conn = $this->clients[$rid];
+        $conn->send(Json::encode(['type' => 'auth', 'data' => $response]));
     }
 
     /**

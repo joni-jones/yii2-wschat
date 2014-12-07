@@ -46,20 +46,19 @@ Chat.Room.prototype.initLang = function() {
 Chat.Room.prototype.addEventsHandlers = function() {
     var self = this;
     Chat.vent.on('user:auth', function (data) {
-        //if collection is empty - fill it
-        if (!self.users.length) {
-            self.fillUsers(data.users, data.user);
-        }
         var user = new Chat.Models.User(data.user);
-        user.set('message', Helper.t('Connect to chat'));
-        user.set('type', 'warning');
-        self.users.add(user);
-        //set current user
-        if (!self.currentUser) {
+        //new user join to chat
+        if (typeof data.join !== 'undefined' && data.join) {
+            user.set('message', Helper.t('Connect to chat'));
+            user.set('type', 'warning');
+            Chat.vent.trigger('message:add', user);
+        } else {
+            //current user get auth response
+            self.fillUsers(data.users, data.user);
             self.currentUser = user;
             Chat.vent.trigger('user:setCurrent', self.currentUser);
         }
-        Chat.vent.trigger('message:add', user);
+        self.users.add(user);
     });
     Chat.vent.on('message:send', function (msg) {
         self.currentUser.set('message', msg);
