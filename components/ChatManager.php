@@ -139,14 +139,15 @@ class ChatManager
     public function storeMessage(User $user, ChatRoom $chat, $message)
     {
 		try {
+            /** @var \yii\mongodb\Collection $collection */
 			$collection = Yii::$app->mongodb->getCollection(History::collectionName());
 			$collection->insert([
 				'chat_id' => $chat->getUid(),
 				'chat_title' => $chat->title,
 				'user_id' => $user->getId(),
 				'username' => $user->username,
-				'message' => $message,
-				'timestamp' => time()
+				'message' => $message['message'],
+				'timestamp' => $message['timestamp']
 			]);
 		} catch (\yii\mongodb\Exception $e) {
 			Yii::error($e->getMessage());

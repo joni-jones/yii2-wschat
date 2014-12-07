@@ -29,6 +29,8 @@ Chat.Views.ChatView = Backbone.View.extend({
             var msg = $input.val();
             $input.val('');
             if (msg) {
+                //clear timestamp - it auto generated
+                this.model.set('timestamp', '');
                 this.model.set('message', msg);
                 this.model.set('type', 'info');
                 this.renderMessage(this.model);

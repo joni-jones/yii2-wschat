@@ -13,7 +13,8 @@
             return '&#' + i.charCodeAt(0) + ';';
         });
     };
-    Chat.formatTime = function(time) {
+    Chat.formatTime = function(secs) {
+        var time = (secs) ? new Date(secs * 1000) : new Date();
         var pad = '00';
         var hours = '' + time.getHours();
         var mins = '' + time.getMinutes();
