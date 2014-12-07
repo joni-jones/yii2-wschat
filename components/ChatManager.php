@@ -3,6 +3,8 @@ namespace jones\wschat\components;
 
 use Yii;
 use jones\wschat\collections\History;
+use yii\mongodb\Exception;
+use yii\mongodb\Query;
 
 /**
  * Class ChatManager
@@ -146,12 +148,34 @@ class ChatManager
 				'chat_title' => $chat->title,
 				'user_id' => $user->getId(),
 				'username' => $user->username,
+                'avatar_16' => $user->avatar_16,
+                'avatar_32' => $user->avatar_32,
 				'message' => $message['message'],
 				'timestamp' => $message['timestamp']
 			]);
-		} catch (\yii\mongodb\Exception $e) {
+		} catch (Exception $e) {
 			Yii::error($e->getMessage());
 		}
+    }
+
+    /**
+     * Load user chat history
+     *
+     * @access public
+     * @param mixed $chatId
+     * @param integer $limit
+     * @return array
+     */
+    public function getHistory($chatId, $limit = 10)
+    {
+        $query = new Query();
+        $query->select(['user_id', 'username', 'message', 'timestamp', 'avatar_16', 'avatar_32'])
+            ->from(History::collectionName())
+            ->where(['chat_id' => $chatId]);
+        if ($limit) {
+            $query->limit($limit);
+        }
+        return $query->all();
     }
 }
  

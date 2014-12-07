@@ -57,6 +57,7 @@ Chat.Room.prototype.addEventsHandlers = function() {
             self.fillUsers(data.users, data.user);
             self.currentUser = user;
             Chat.vent.trigger('user:setCurrent', self.currentUser);
+            Chat.vent.trigger('history:load', data.history);
         }
         self.users.add(user);
     });
@@ -66,7 +67,10 @@ Chat.Room.prototype.addEventsHandlers = function() {
     });
     Chat.vent.on('user:remove', function (data) {
         var user = self.users.get(data.id);
-        user.set('message', Helper.t('Left this chat'));
+        user.set({
+            message: Helper.t('Left this chat'),
+            timestamp: ''
+        });
         Chat.vent.trigger('message:add', user);
         self.users.remove(user);
     });

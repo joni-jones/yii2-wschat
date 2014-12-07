@@ -126,7 +126,7 @@ class Chat implements MessageComponentInterface
         $response = [
             'user' => $joinedUser,
             'users' => $users,
-            'history' => []
+            'history' => $this->cm->getHistory($chat->getUid())
         ];
         $conn = $this->clients[$rid];
         $conn->send(Json::encode(['type' => 'auth', 'data' => $response]));

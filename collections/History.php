@@ -11,6 +11,8 @@ use yii\mongodb\ActiveRecord;
  * @property string $chat_title
  * @property string $user_id
  * @property string $username
+ * @property string $avatar_16
+ * @property string $avatar_32
  * @property integer $timestamp
  * @property string $message
  */
@@ -29,7 +31,7 @@ class History extends ActiveRecord
      */
     public function attributes()
     {
-        return ['_id', 'chat_id', 'chat_title', 'user_id', 'username', 'timestamp', 'message'];
+        return ['_id', 'chat_id', 'chat_title', 'user_id', 'username', 'avatar_16', 'avatar_32', 'timestamp', 'message'];
     }
 }
  
