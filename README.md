@@ -100,6 +100,8 @@ You can also store added chat, just specify js callback for vent events:
     
 In the callback you will get access to ``Chat.Models.ChatRoom`` backbone model.
 
+> If `YII_DEBUG` is enabled - all js scripts will be loaded separately.
+
 License
 ----
 
