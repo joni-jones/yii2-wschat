@@ -2,6 +2,10 @@ Web Socket Chat
 ===============
 Online chat based on web sockets and ratchet php
 
+### Version
+
+0.0.4
+
 Installation
 ------------
 
