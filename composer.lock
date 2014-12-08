@@ -4,8 +4,41 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "a4db265c1c00955aec056f30c5bcd23e",
+    "hash": "3c3933842abf370ac874d020f8ea3431",
     "packages": [
+        {
+            "name": "bower-asset/backbone",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jashkenas/backbone.git",
+                "reference": "54a4c17343ab0f3cb72e4e13aa15ec4c4f5b65b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jashkenas/backbone/zipball/54a4c17343ab0f3cb72e4e13aa15ec4c4f5b65b4",
+                "reference": "54a4c17343ab0f3cb72e4e13aa15ec4c4f5b65b4",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/underscore": ">=1.6.0"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "backbone.js",
+                "bower-asset-ignore": [
+                    "docs",
+                    "examples",
+                    "test",
+                    "*.yml",
+                    "*.html",
+                    "*.ico",
+                    "*.md",
+                    "CNAME"
+                ]
+            },
+            "time": "2014-12-08 12:36:20"
+        },
         {
             "name": "bower-asset/bootstrap",
             "version": "v3.3.1",
@@ -58,6 +91,44 @@
             ]
         },
         {
+            "name": "bower-asset/fontawesome",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FortAwesome/Font-Awesome.git",
+                "reference": "a65bd93d81e9e6bd5ebfa41757a4474960b973b4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FortAwesome/Font-Awesome/zipball/a65bd93d81e9e6bd5ebfa41757a4474960b973b4",
+                "reference": "a65bd93d81e9e6bd5ebfa41757a4474960b973b4",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "./css/font-awesome.css",
+                    "./fonts/*"
+                ],
+                "bower-asset-ignore": [
+                    "*/.*",
+                    "*.json",
+                    "src",
+                    "*.yml",
+                    "Gemfile",
+                    "Gemfile.lock",
+                    "*.md"
+                ]
+            },
+            "license": [
+                "OFL-1.1",
+                "MIT",
+                "CC-BY-3.0"
+            ],
+            "description": "Font Awesome",
+            "time": "2014-08-26 16:36:44"
+        },
+        {
             "name": "bower-asset/jquery",
             "version": "2.1.1",
             "source": {
@@ -101,17 +172,50 @@
             ]
         },
         {
-            "name": "bower-asset/jquery.inputmask",
-            "version": "3.1.44",
+            "name": "bower-asset/jquery-cookie",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/RobinHerbots/jquery.inputmask.git",
-                "reference": "c95fe993f91e1da2069a26d84eaa372835842286"
+                "url": "https://github.com/carhartl/jquery-cookie.git",
+                "reference": "aeb793d27286c7f0b915c3aaee24c3b7d04d71fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/c95fe993f91e1da2069a26d84eaa372835842286",
-                "reference": "c95fe993f91e1da2069a26d84eaa372835842286",
+                "url": "https://api.github.com/repos/carhartl/jquery-cookie/zipball/aeb793d27286c7f0b915c3aaee24c3b7d04d71fd",
+                "reference": "aeb793d27286c7f0b915c3aaee24c3b7d04d71fd",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.2"
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "src/jquery.cookie.js"
+                ],
+                "bower-asset-ignore": [
+                    "test",
+                    ".*",
+                    "*.json",
+                    "*.md",
+                    "*.txt",
+                    "Gruntfile.js"
+                ]
+            },
+            "time": "2014-07-16 05:30:01"
+        },
+        {
+            "name": "bower-asset/jquery.inputmask",
+            "version": "3.1.45",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RobinHerbots/jquery.inputmask.git",
+                "reference": "b656c5b61b05d2a479b69b20de5bc01b837a43c5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RobinHerbots/jquery.inputmask/zipball/b656c5b61b05d2a479b69b20de5bc01b837a43c5",
+                "reference": "b656c5b61b05d2a479b69b20de5bc01b837a43c5",
                 "shasum": ""
             },
             "require": {
@@ -153,6 +257,51 @@
             ]
         },
         {
+            "name": "bower-asset/pnotify",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sciactive/pnotify.git",
+                "reference": "562897714e15bc5854f94b250576bda8576cb1ef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sciactive/pnotify/zipball/562897714e15bc5854f94b250576bda8576cb1ef",
+                "reference": "562897714e15bc5854f94b250576bda8576cb1ef",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": [
+                    "pnotify.core.js",
+                    "pnotify.buttons.js",
+                    "pnotify.callbacks.js",
+                    "pnotify.confirm.js",
+                    "pnotify.desktop.js",
+                    "pnotify.history.js",
+                    "pnotify.nonblock.js",
+                    "pnotify.core.css",
+                    "pnotify.buttons.css",
+                    "pnotify.history.css"
+                ],
+                "bower-asset-ignore": [
+                    "build-cache/",
+                    "build-tools/",
+                    "includes/",
+                    "oxygen/",
+                    "devnote*.*",
+                    "index.html",
+                    "README.md",
+                    "testing.html",
+                    "buildcustom.php",
+                    "pnotify.tooltip.js",
+                    "pnotify.mobile.js"
+                ]
+            },
+            "description": "JavaScript notification plugin.",
+            "time": "2014-12-07 21:10:03"
+        },
+        {
             "name": "bower-asset/punycode",
             "version": "v1.3.2",
             "source": {
@@ -179,6 +328,42 @@
                     "package.json"
                 ]
             }
+        },
+        {
+            "name": "bower-asset/underscore",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jashkenas/underscore.git",
+                "reference": "4a67a0ff9067ce02e250ca7c61d276fe8469fdaf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jashkenas/underscore/zipball/4a67a0ff9067ce02e250ca7c61d276fe8469fdaf",
+                "reference": "4a67a0ff9067ce02e250ca7c61d276fe8469fdaf",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "underscore.js",
+                "bower-asset-ignore": [
+                    "docs",
+                    "test",
+                    "*.yml",
+                    "CNAME",
+                    "index.html",
+                    "favicon.ico",
+                    "CONTRIBUTING.md"
+                ]
+            },
+            "keywords": [
+                "browser",
+                "client",
+                "functional",
+                "server",
+                "util"
+            ],
+            "time": "2014-12-08 07:29:20"
         },
         {
             "name": "bower-asset/yii2-pjax",
@@ -262,12 +447,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/cebe/markdown.git",
-                "reference": "77ba2daada49fc851b397028d26fb2078ec4a3cf"
+                "reference": "a0eeeacbed0864ceb47432cd5be4ed71664a63d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cebe/markdown/zipball/77ba2daada49fc851b397028d26fb2078ec4a3cf",
-                "reference": "77ba2daada49fc851b397028d26fb2078ec4a3cf",
+                "url": "https://api.github.com/repos/cebe/markdown/zipball/a0eeeacbed0864ceb47432cd5be4ed71664a63d8",
+                "reference": "a0eeeacbed0864ceb47432cd5be4ed71664a63d8",
                 "shasum": ""
             },
             "require": {
@@ -314,7 +499,7 @@
                 "markdown",
                 "markdown-extra"
             ],
-            "time": "2014-11-07 12:53:11"
+            "time": "2014-12-07 13:29:05"
         },
         {
             "name": "evenement/evenement",
@@ -744,12 +929,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "3366bcc0f8a59e7a2295b214a76d1ce707bfd20d"
+                "reference": "fd40db0b125abf4d6f6353c8f5809ea64e7953bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/3366bcc0f8a59e7a2295b214a76d1ce707bfd20d",
-                "reference": "3366bcc0f8a59e7a2295b214a76d1ce707bfd20d",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/fd40db0b125abf4d6f6353c8f5809ea64e7953bb",
+                "reference": "fd40db0b125abf4d6f6353c8f5809ea64e7953bb",
                 "shasum": ""
             },
             "require": {
@@ -793,7 +978,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com",
-            "time": "2014-12-02 20:20:06"
+            "time": "2014-12-08 08:44:04"
         },
         {
             "name": "symfony/http-foundation",
@@ -802,12 +987,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/HttpFoundation.git",
-                "reference": "406b34d3fe83bc3b5daed0cd5ee8317350845be2"
+                "reference": "adbfce9ff42e516c6c41f5493d75dc3332943a18"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/406b34d3fe83bc3b5daed0cd5ee8317350845be2",
-                "reference": "406b34d3fe83bc3b5daed0cd5ee8317350845be2",
+                "url": "https://api.github.com/repos/symfony/HttpFoundation/zipball/adbfce9ff42e516c6c41f5493d75dc3332943a18",
+                "reference": "adbfce9ff42e516c6c41f5493d75dc3332943a18",
                 "shasum": ""
             },
             "require": {
@@ -846,7 +1031,7 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "http://symfony.com",
-            "time": "2014-12-02 20:19:50"
+            "time": "2014-12-08 08:43:57"
         },
         {
             "name": "symfony/routing",
@@ -855,12 +1040,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Routing.git",
-                "reference": "fd36a76c9a3405ecf2d60990dce3a95c9ed27488"
+                "reference": "9deaf3e1cd25d3b692f356b2ee4f5653d3d92e41"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Routing/zipball/fd36a76c9a3405ecf2d60990dce3a95c9ed27488",
-                "reference": "fd36a76c9a3405ecf2d60990dce3a95c9ed27488",
+                "url": "https://api.github.com/repos/symfony/Routing/zipball/9deaf3e1cd25d3b692f356b2ee4f5653d3d92e41",
+                "reference": "9deaf3e1cd25d3b692f356b2ee4f5653d3d92e41",
                 "shasum": ""
             },
             "require": {
@@ -913,7 +1098,7 @@
                 "uri",
                 "url"
             ],
-            "time": "2014-12-02 20:19:50"
+            "time": "2014-12-08 08:43:57"
         },
         {
             "name": "yiisoft/yii2",
@@ -921,12 +1106,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-framework.git",
-                "reference": "baa3a93dea78e3d6d92edcd62f9399215374214f"
+                "reference": "c93ef64a74f7502e4d6c2f799ecd0566822062c6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/baa3a93dea78e3d6d92edcd62f9399215374214f",
-                "reference": "baa3a93dea78e3d6d92edcd62f9399215374214f",
+                "url": "https://api.github.com/repos/yiisoft/yii2-framework/zipball/c93ef64a74f7502e4d6c2f799ecd0566822062c6",
+                "reference": "c93ef64a74f7502e4d6c2f799ecd0566822062c6",
                 "shasum": ""
             },
             "require": {
@@ -1001,7 +1186,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2014-12-06 14:36:42"
+            "time": "2014-12-07 16:46:05"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -1009,12 +1194,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-bootstrap.git",
-                "reference": "f632f47746ca4ea84a77e9ee631e997e027de0b3"
+                "reference": "f9cddd7523454f2acfdd9574c9573cceb52787f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/f632f47746ca4ea84a77e9ee631e997e027de0b3",
-                "reference": "f632f47746ca4ea84a77e9ee631e997e027de0b3",
+                "url": "https://api.github.com/repos/yiisoft/yii2-bootstrap/zipball/f9cddd7523454f2acfdd9574c9573cceb52787f3",
+                "reference": "f9cddd7523454f2acfdd9574c9573cceb52787f3",
                 "shasum": ""
             },
             "require": {
@@ -1047,7 +1232,7 @@
                 "bootstrap",
                 "yii2"
             ],
-            "time": "2014-12-06 14:36:42"
+            "time": "2014-12-07 16:46:05"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -1055,12 +1240,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-composer.git",
-                "reference": "0ed315f4b450604d5c2fa5fcacaf27fdde73d062"
+                "reference": "16ff9092c55bc06765cea50dd7cdae881cab4d14"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/0ed315f4b450604d5c2fa5fcacaf27fdde73d062",
-                "reference": "0ed315f4b450604d5c2fa5fcacaf27fdde73d062",
+                "url": "https://api.github.com/repos/yiisoft/yii2-composer/zipball/16ff9092c55bc06765cea50dd7cdae881cab4d14",
+                "reference": "16ff9092c55bc06765cea50dd7cdae881cab4d14",
                 "shasum": ""
             },
             "require": {
@@ -1094,7 +1279,7 @@
                 "extension installer",
                 "yii2"
             ],
-            "time": "2014-11-07 16:17:16"
+            "time": "2014-12-07 16:46:05"
         },
         {
             "name": "yiisoft/yii2-mongodb",
@@ -1102,12 +1287,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/yiisoft/yii2-mongodb.git",
-                "reference": "627794373702eb97b4c340b60eff59f098ca83ac"
+                "reference": "b192a436e6934cdc52d540f5eebcfc4ab39357ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-mongodb/zipball/627794373702eb97b4c340b60eff59f098ca83ac",
-                "reference": "627794373702eb97b4c340b60eff59f098ca83ac",
+                "url": "https://api.github.com/repos/yiisoft/yii2-mongodb/zipball/b192a436e6934cdc52d540f5eebcfc4ab39357ea",
+                "reference": "b192a436e6934cdc52d540f5eebcfc4ab39357ea",
                 "shasum": ""
             },
             "require": {
@@ -1142,7 +1327,7 @@
                 "mongodb",
                 "yii2"
             ],
-            "time": "2014-11-17 15:53:48"
+            "time": "2014-12-07 16:46:05"
         }
     ],
     "packages-dev": [],

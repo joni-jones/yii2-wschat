@@ -16,7 +16,12 @@
         "yiisoft/yii2": "*",
         "yiisoft/yii2-mongodb": "*",
         "yiisoft/yii2-bootstrap": "*",
-        "cboden/ratchet": "0.3.*"
+        "cboden/ratchet": "0.3.*",
+        "bower-asset/underscore": "*",
+        "bower-asset/backbone": "*",
+        "bower-asset/jquery-cookie": "*",
+        "bower-asset/pnotify": "*",
+        "bower-asset/fontawesome": "*"
     },
     "autoload": {
         "psr-4": {

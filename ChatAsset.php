@@ -10,16 +10,10 @@ use yii\web\AssetBundle;
 class ChatAsset extends AssetBundle
 {
     public $css = [
-        '//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css',
-        '//cdnjs.cloudflare.com/ajax/libs/pnotify/2.0.0/pnotify.core.min.css',
         'css/style.css'
     ];
 
     public $js = [
-        '//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js',
-        '//cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js',
-        '//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js',
-        '//cdnjs.cloudflare.com/ajax/libs/pnotify/2.0.0/pnotify.core.min.js',
         'js/helper.js',
         'js/chat.js',
         'js/models/user.js',
@@ -39,7 +33,7 @@ class ChatAsset extends AssetBundle
     ];
 
      public $depends = [
-         '\yii\bootstrap\BootstrapPluginAsset'
+         'jones\wschat\ChatLibAsset'
      ];
 
     /**
@@ -48,6 +42,10 @@ class ChatAsset extends AssetBundle
     public function init()
     {
         $this->sourcePath = __DIR__.'/assets/';
+        //set minimized version of js scripts for non debug version
+        if (!YII_DEBUG) {
+            $this->js = ['js/chat.min.js'];
+        }
         parent::init();
     }
 }
