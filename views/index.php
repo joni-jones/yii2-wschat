@@ -22,7 +22,6 @@ ChatAsset::register($this);
             <h4><i class="fa fa-weixin"></i><?=Yii::t('app', 'Chat Rooms')?></h4>
             <div class="btn-group" role="group">
                 <button type="button" id="add-chat" class="btn btn-default"><?=Yii::t('app', 'Add');?></button>
-                <button type="button" id="history-chat" class="btn btn-default"><?=Yii::t('app', 'History');?></button>
                 <button type="button" id="exit-chat" class="btn btn-default">
                     <i class="fa fa-sign-out"></i><?=Yii::t('app', 'Exit');?>
                 </button>
