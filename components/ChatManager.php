@@ -29,7 +29,11 @@ class ChatManager
     public function isUserExistsInChat($id, $chatId)
     {
         foreach ($this->users as $rid => $user) {
-            if ($user->id == $id && $user->getChat()->getUid() == $chatId) {
+            $chat = $user->getChat();
+            if (!$chat) {
+                continue;
+            }
+            if ($user->id == $id && $chat->getUid() == $chatId) {
                 return $rid;
             }
         }
