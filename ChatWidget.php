@@ -3,7 +3,7 @@ namespace jones\wschat;
 
 use yii\base\Widget;
 use yii\web\View;
-use yii\helpers\json;
+use yii\helpers\Json;
 
 /**
  * Class ChatWidget

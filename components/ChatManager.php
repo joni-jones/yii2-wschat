@@ -29,7 +29,11 @@ class ChatManager
     public function isUserExistsInChat($id, $chatId)
     {
         foreach ($this->users as $rid => $user) {
-            if ($user->id == $id && $user->getChat()->getUid() == $chatId) {
+            $chat = $user->getChat();
+            if (!$chat) {
+                continue;
+            }
+            if ($user->id == $id && $chat->getUid() == $chatId) {
                 return $rid;
             }
         }
@@ -140,22 +144,22 @@ class ChatManager
      */
     public function storeMessage(User $user, ChatRoom $chat, $message)
     {
-		try {
+	try {
             /** @var \yii\mongodb\Collection $collection */
-			$collection = Yii::$app->mongodb->getCollection(History::collectionName());
-			$collection->insert([
-				'chat_id' => $chat->getUid(),
-				'chat_title' => $chat->title,
-				'user_id' => $user->getId(),
-				'username' => $user->username,
+            $collection = Yii::$app->mongodb->getCollection(History::collectionName());
+            $collection->insert([
+                'chat_id' => $chat->getUid(),
+                'chat_title' => $chat->title,
+                'user_id' => $user->getId(),
+                'username' => $user->username,
                 'avatar_16' => $user->avatar_16,
                 'avatar_32' => $user->avatar_32,
-				'message' => $message['message'],
-				'timestamp' => $message['timestamp']
-			]);
-		} catch (Exception $e) {
-			Yii::error($e->getMessage());
-		}
+                'message' => $message['message'],
+                'timestamp' => $message['timestamp']
+            ]);
+        } catch (Exception $e) {
+            Yii::error($e->getMessage());
+        }
     }
 
     /**
