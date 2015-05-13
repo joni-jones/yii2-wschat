@@ -2,10 +2,6 @@ Web Socket Chat
 ===============
 Online chat based on web sockets and ratchet php
 
-### Version
-
-0.0.4
-
 Installation
 ------------
 
@@ -105,6 +101,9 @@ You can also store added chat, just specify js callback for vent events:
 In the callback you will get access to ``Chat.Models.ChatRoom`` backbone model.
 
 > If `YII_DEBUG` is enabled - all js scripts will be loaded separately.
+
+Also by default chat will try to load two images:
+`/img/avatar_16.png` and `/img/avatar_32.png`
 
 License
 ----
