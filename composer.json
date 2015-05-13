@@ -2,10 +2,9 @@
     "name": "joni-jones/yii2-wschat",
     "description": "Online chat based on web sockets and ratchet php",
     "type": "yii2-extension",
-    "keywords": ["yii2","extension","backbone","ratchet", "websocket"],
-    "version": "0.0.4",
+    "keywords": ["yii2","extension","backbone","ratchet","websocket","chat"],
     "license": "MIT",
-    "minimum-stability": "dev",
+    "stability": "stable",
     "authors": [
         {
             "name": "Ievgen Sentiabov",
@@ -17,11 +16,11 @@
         "yiisoft/yii2-mongodb": "*",
         "yiisoft/yii2-bootstrap": "*",
         "cboden/ratchet": "0.3.*",
-        "bower-asset/underscore": "*",
-        "bower-asset/backbone": "*",
+        "bower-asset/underscore": "1.8.3",
+        "bower-asset/backbone": "1.1.2",
         "bower-asset/jquery-cookie": "*",
-        "bower-asset/pnotify": "*",
-        "bower-asset/fontawesome": "*"
+        "bower-asset/pnotify": "2.0.1",
+        "bower-asset/fontawesome": "4.3.0"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

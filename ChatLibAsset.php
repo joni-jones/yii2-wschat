@@ -17,8 +17,8 @@ class ChatLibAsset extends AssetBundle
     ];
     public $js = [
         'underscore/underscore-min.js',
-        'backbone/backbone-min.js',
-        'jquery-cookie/src/jquery.cookie.js',
+        'backbone/backbone.js',
+        'jquery-cookie/jquery.cookie.js',
         'pnotify/pnotify.core.js',
     ];
 
