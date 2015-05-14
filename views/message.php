@@ -6,7 +6,7 @@
         </div>
         </dt>
         <dd>
-            <div class="chat-msg alert-<%=type%>">
+            <div class="chat-msg text-left alert-<%=type%>">
                 <span class="msg-time"><%=timestamp%></span>
                 <div><%=message%></div>
             </div>
