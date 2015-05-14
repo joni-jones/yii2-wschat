@@ -2,7 +2,7 @@
 namespace jones\wschat\components;
 
 use Yii;
-use yii\helpers\json;
+use yii\helpers\Json;
 use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
 
