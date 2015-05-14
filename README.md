@@ -35,6 +35,7 @@ extension to store messages history, so you need just specify connection in `con
         ]
     ]
     ```
+    In created mongodb database you need to create collection named as `history`;
 
 2. To start chat server need to create console command and setup it as demon:
     
