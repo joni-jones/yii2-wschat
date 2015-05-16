@@ -1,5 +1,7 @@
 Web Socket Chat
 ===============
+
+[![Join the chat at https://gitter.im/joni-jones/yii2-wschat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/joni-jones/yii2-wschat?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 Online chat based on web sockets and ratchet php
 
 Installation
