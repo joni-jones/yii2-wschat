@@ -144,7 +144,7 @@ class ChatManager
      */
     public function storeMessage(User $user, ChatRoom $chat, $message)
     {
-	try {
+	    try {
             /** @var \yii\mongodb\Collection $collection */
             $collection = Yii::$app->mongodb->getCollection(History::collectionName());
             $collection->insert([
