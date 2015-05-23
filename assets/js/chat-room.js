@@ -86,7 +86,7 @@ Chat.Room.prototype.addConnectionHandlers = function() {
         }
     };
     self.conn.onerror = function (e) {
-        Helper.Message.error('Current room is not available');
+        Helper.Message.error('Connection refused');
         self.conn.close();
     };
     self.conn.onmessage = function (e) {
