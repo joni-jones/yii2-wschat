@@ -17,12 +17,15 @@ abstract class AbstractStorage
      *
      * @access public
      * @static
+     * @param string $storage default null
      * @return \jones\wschat\components\AbstractStorage
      */
-    public static function factory()
+    public static function factory($storage = null)
     {
-        $components = Yii::$app->getComponents();
-        $storage = !empty($components['mongodb']) ? 'mongodb' : Yii::$app->getDb()->driverName;
+        if (empty($storage)) {
+            $components = Yii::$app->getComponents();
+            $storage = !empty($components['mongodb']) ? 'mongodb' : Yii::$app->getDb()->driverName;
+        }
         switch ($storage) {
             case 'mongodb':
                 $class = new History();
