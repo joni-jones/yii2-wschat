@@ -10,3 +10,12 @@ settings:
     suite_class: \PHPUnit_Framework_TestSuite
     memory_limit: 1024M
     log: true
+modules:
+    config:
+        Db:
+            dsn: 'mysql:host=localhost;dbname=wschat_tests'
+#            dsn: 'pgsql:host=localhost;dbname=wschat_tests'
+            user: ''
+            password: ''
+            dump: codeception/_data/pgsql.sql
+#            dump: codeception/_data/mysql.sql
