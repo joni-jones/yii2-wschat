@@ -3,6 +3,9 @@ Web Socket Chat
 
 Online chat based on web sockets and ratchet php
 
+[![Latest Stable Version](https://poser.pugx.org/joni-jones/yii2-wschat/v/stable)](https://packagist.org/packages/joni-jones/yii2-wschat)
+[![Total Downloads](https://poser.pugx.org/joni-jones/yii2-wschat/downloads)](https://packagist.org/packages/joni-jones/yii2-wschat)
+[![License](https://poser.pugx.org/joni-jones/yii2-wschat/license)](https://packagist.org/packages/joni-jones/yii2-wschat)
 [![Join the chat at https://gitter.im/joni-jones/yii2-wschat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/joni-jones/yii2-wschat?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Installation
@@ -27,8 +30,14 @@ to the require section of your `composer.json` file.
 Usage
 ------------
 
-1. Chat use [MongoDB](http://docs.mongodb.org/) and [yii2-mongodb](http://www.yiiframework.com/doc-2.0/ext-mongodb-index.html)
-extension to store messages history, so you need just specify connection in `console` config:
+1. The chat extension can use any database storage supported by yii.
+	
+	If `mongodb` extension specified the chat will be try to use it as message history storage, otherwise extension
+will be use specified in application config db component.
+	
+	The simple example how to use mongodb storage is listed below.
+Install [MongoDB](http://docs.mongodb.org/) and [yii2-mongodb](http://www.yiiframework.com/doc-2.0/ext-mongodb-index.html)
+extension to store messages history and you need just specify connection in `console` config:
 
     ```php
     'components' => [
@@ -39,6 +48,9 @@ extension to store messages history, so you need just specify connection in `con
     ]
     ```
     In created mongodb database you need to create collection named as `history`;
+
+	> IMPORTANT: if you use db component - you need to create table `history` in your database.
+The simple examples postgresql and mysql you can see in `tests/codeception` directory.
 
 2. To start chat server need to create console command and setup it as demon:
     
@@ -118,7 +130,7 @@ In the callback you will get access to ``Chat.Models.ChatRoom`` backbone model.
 > If `YII_DEBUG` is enabled - all js scripts will be loaded separately.
 
 Also by default chat will try to load two images:
-`/img/avatar_16.png` and `/img/avatar_32.png`
+`/img/avatar_16.png` and `/img/avatar_32.png`, but this images are not included to extension.
 
 License
 ----

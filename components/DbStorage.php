@@ -1,34 +1,26 @@
 <?php
-namespace jones\wschat\collections;
+namespace jones\wschat\components;
 
-use Yii;
-use yii\mongodb\Exception;
-use yii\mongodb\Query;
-use jones\wschat\components\AbstractStorage;
+use yii;
+use yii\db\Query;
+use yii\db\Exception;
 
 /**
- * Class History
- * @package jones\wschat\collections
- * @property \MongoId $_id
- * @property string $chat_id
- * @property string $chat_title
- * @property string $user_id
- * @property string $username
- * @property string $avatar_16
- * @property string $avatar_32
- * @property integer $timestamp
- * @property string $message
+ * Class DbStorage
+ *
+ * This class is database storage implementation for chat messages storing
+ * @package jones\wschat\components
  */
-class History extends AbstractStorage
+class DbStorage extends AbstractStorage
 {
     /**
-     * Get name of mongo collection
+     * Get name of table
      *
      * @access public
      * @static
      * @return string
      */
-    public static function collectionName()
+    public static function tableName()
     {
         return 'history';
     }
@@ -42,7 +34,7 @@ class History extends AbstractStorage
     public function attributes()
     {
         return [
-            '_id', 'chat_id', 'chat_title', 'user_id', 'username', 'avatar_16',
+            'id', 'chat_id', 'chat_title', 'user_id', 'username', 'avatar_16',
             'avatar_32', 'timestamp', 'message'
         ];
     }
@@ -54,7 +46,7 @@ class History extends AbstractStorage
     {
         $query = new Query();
         $query->select(['user_id', 'username', 'message', 'timestamp', 'avatar_16', 'avatar_32'])
-            ->from(self::collectionName())
+            ->from(self::tableName())
             ->where(['chat_id' => $chatId]);
         if ($limit) {
             $query->limit($limit);
@@ -68,9 +60,9 @@ class History extends AbstractStorage
     public function storeMessage(array $params)
     {
         try {
-            /** @var \yii\mongodb\Collection $collection */
-            $collection = Yii::$app->mongodb->getCollection(self::collectionName());
-            $collection->insert($params);
+            Yii::$app->getDb()->createCommand()
+                ->insert(self::tableName(), $params)
+                ->execute();
         } catch (Exception $e) {
             Yii::error($e->getMessage());
             return false;

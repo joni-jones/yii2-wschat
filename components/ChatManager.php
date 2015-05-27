@@ -3,8 +3,6 @@ namespace jones\wschat\components;
 
 use Yii;
 use jones\wschat\collections\History;
-use yii\mongodb\Exception;
-use yii\mongodb\Query;
 
 /**
  * Class ChatManager
@@ -144,22 +142,17 @@ class ChatManager
      */
     public function storeMessage(User $user, ChatRoom $chat, $message)
     {
-	    try {
-            /** @var \yii\mongodb\Collection $collection */
-            $collection = Yii::$app->mongodb->getCollection(History::collectionName());
-            $collection->insert([
-                'chat_id' => $chat->getUid(),
-                'chat_title' => $chat->title,
-                'user_id' => $user->getId(),
-                'username' => $user->username,
-                'avatar_16' => $user->avatar_16,
-                'avatar_32' => $user->avatar_32,
-                'message' => $message['message'],
-                'timestamp' => $message['timestamp']
-            ]);
-        } catch (Exception $e) {
-            Yii::error($e->getMessage());
-        }
+        $params = [
+            'chat_id' => $chat->getUid(),
+            'chat_title' => $chat->title,
+            'user_id' => $user->getId(),
+            'username' => $user->username,
+            'avatar_16' => $user->avatar_16,
+            'avatar_32' => $user->avatar_32,
+            'message' => $message['message'],
+            'timestamp' => $message['timestamp']
+        ];
+        AbstractStorage::factory()->storeMessage($params);
     }
 
     /**
@@ -172,14 +165,7 @@ class ChatManager
      */
     public function getHistory($chatId, $limit = 10)
     {
-        $query = new Query();
-        $query->select(['user_id', 'username', 'message', 'timestamp', 'avatar_16', 'avatar_32'])
-            ->from(History::collectionName())
-            ->where(['chat_id' => $chatId]);
-        if ($limit) {
-            $query->limit($limit);
-        }
-        return $query->all();
+        return AbstractStorage::factory()->getHistory($chatId, $limit);
     }
 }
  
