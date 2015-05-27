@@ -54,10 +54,10 @@ The simple examples postgresql and mysql you can see in `tests/codeception` dire
 
 2. To start chat server need to create console command and setup it as demon:
     
-    - Create controller which extends `yii\console\controller`:
+    - Create controller which extends `yii\console\Controller`:
         
         ```php
-        ServerController extends \yii\console\controller
+        ServerController extends \yii\console\Controller
         ```
         
     - Create action to start server:
@@ -71,7 +71,7 @@ The simple examples postgresql and mysql you can see in `tests/codeception` dire
         use Ratchet\Http\HttpServer;
         use Ratchet\WebSocket\WsServer;
         
-        class ServerController extends \yii\console\controller
+        class ServerController extends \yii\console\Controller
         {
             public function actionRun()
             {
