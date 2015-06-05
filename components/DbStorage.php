@@ -48,6 +48,7 @@ class DbStorage extends AbstractStorage
         $query->select(['user_id', 'username', 'message', 'timestamp', 'avatar_16', 'avatar_32'])
             ->from(self::tableName())
             ->where(['chat_id' => $chatId]);
+        $query->orderBy(['timestamp' => SORT_DESC]);
         if ($limit) {
             $query->limit($limit);
         }

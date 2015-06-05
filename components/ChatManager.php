@@ -165,7 +165,8 @@ class ChatManager
      */
     public function getHistory($chatId, $limit = 10)
     {
-        return AbstractStorage::factory()->getHistory($chatId, $limit);
+        $data = AbstractStorage::factory()->getHistory($chatId, $limit);
+        return array_reverse($data);
     }
 }
  
