@@ -17,7 +17,7 @@
         "yiisoft/yii2-bootstrap": "*",
         "cboden/ratchet": "0.3.*",
         "bower-asset/underscore": "1.8.3",
-        "bower-asset/backbone": "1.1.2",
+        "bower-asset/backbone": "1.2.*",
         "bower-asset/js-cookie": "1.5.*",
         "bower-asset/pnotify": "2.0.1",
         "bower-asset/fontawesome": "4.3.0"

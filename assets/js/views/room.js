@@ -8,7 +8,7 @@ Chat.Views.RoomItemView = Backbone.View.extend({
     },
     initialize: function() {
         var search = location.search.split('=');
-        this.currentCid = search[1] || '';
+        this.currentCid = search[1] || 1;
     },
     render: function() {
         var template = _.template($(this.template).html());
