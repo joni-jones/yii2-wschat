@@ -132,7 +132,9 @@ In the callback you will get access to ``Chat.Models.ChatRoom`` backbone model.
 > If `YII_DEBUG` is enabled - all js scripts will be loaded separately.
 
 Also by default chat will try to load two images:
-`/img/avatar_16.png` and `/img/avatar_32.png`, but this images are not included to extension.
+`/img/avatar_16.png` and `/img/avatar_32.png`.
+
+Special thanks for [Anna Litviniuk](http://annalit.com/) for avatar icons.
 
 License
 ----

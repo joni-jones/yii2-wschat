@@ -12,7 +12,7 @@ class ChatAsset extends AssetBundle
     public $css = [
         'css/style.css'
     ];
-
+    
     public $js = [
         'js/helper.js',
         'js/chat.js',
@@ -32,9 +32,9 @@ class ChatAsset extends AssetBundle
         'js/main.js',
     ];
 
-     public $depends = [
+    public $depends = [
         'jones\wschat\ChatLibAsset'
-     ];
+    ];
 
     /**
      * @inheritdoc

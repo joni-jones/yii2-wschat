@@ -1,6 +1,7 @@
 <?php
 namespace jones\wschat;
 
+use Yii;
 use yii\base\Widget;
 use yii\web\View;
 use yii\helpers\Json;
@@ -17,13 +18,15 @@ class ChatWidget extends Widget
     public $auth = false;
     public $user_id = null;
     public $view = 'index';
-    /** @var int $port web socket port */
+    /** @var integer $port web socket port */
     public $port = 8080;
     /** @var array $chatList list of preloaded chats */
     public $chatList = [
         'id' => 1,
         'title' => 'All'
     ];
+    /** @var string path to avatars folder */
+    public $imgPath = '@vendor/joni-jones/yii2-wschat/assets/img';
 
     /**
      * @override
@@ -31,6 +34,7 @@ class ChatWidget extends Widget
     public function run()
     {
         $this->registerJsOptions();
+        Yii::$app->assetManager->publish($this->imgPath);
         return $this->render($this->view, ['auth' => $this->auth]);
     }
 
@@ -45,7 +49,8 @@ class ChatWidget extends Widget
         $opts = [
             'var currentUserId = '.($this->user_id ?: 0).';',
             'var port = '.$this->port.';',
-            'var chatList = '.Json::encode($this->chatList),
+            'var chatList = '.Json::encode($this->chatList).';',
+            'var imgPath = "'.Yii::$app->assetManager->getPublishedUrl($this->imgPath).'";',
         ];
         $this->getView()->registerJs(implode(' ', $opts), View::POS_BEGIN);
     }
