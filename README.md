@@ -87,11 +87,11 @@ The simple examples postgresql and mysql you can see in `tests/codeception` dire
     If you want to use chat for auth users, you must to specify `userClassName` property for `ChatManager` instance.
     For example:
     
-        ```php
+    ```php
         $manager = Yii::configure(new ChatManager(), [
             'userClassName' => '\yii\db\ActiveRecord' //allow to get users from MySQL or PostgreSQL
         ]);
-        ```
+    ```
         
     - Now, you can run chat server with `yii` console command:
     
@@ -106,12 +106,13 @@ The simple examples postgresql and mysql you can see in `tests/codeception` dire
     ```
     
     or if you want to use chat for auth users just add config as parameter:
-      
-        <?=ChatWidget::widget([
-            'auth' => true,
-            'user_id' => '' // setup id of current logged user
-        ]);?>
-    
+        
+    ```php  
+    <?=ChatWidget::widget([
+        'auth' => true,
+        'user_id' => '' // setup id of current logged user
+    ]);?>
+    ```
     
         List of available options:
             auth - boolean, default: false
@@ -128,14 +129,30 @@ You can also store added chat, just specify js callback for vent events:
         console.log(chatModel);
     });
     
-In the callback you will get access to ``Chat.Models.ChatRoom`` backbone model.
+This code snipped may be added in your code, but after chat widget loading. In the callback you will get access to ``Chat.Models.ChatRoom`` backbone model. Now, you need add your code to save chat room instead `console.log()`.
 
 > If `YII_DEBUG` is enabled - all js scripts will be loaded separately.
 
 Also by default chat will try to load two images:
-`/img/avatar_16.png` and `/img/avatar_32.png`.
+`/avatar_16.png` and `/avatar_32.png` from assets folder.
 
 Special thanks for [Anna Litviniuk](http://annalit.com/) for avatar icons.
+
+If you don't see any messages in console log, check `flushInterval` and `exportInterval` of your log configuration component. The simple configuration may looks like this:
+```php
+'log' => [
+    'traceLevel' => YII_DEBUG ? 3 : 0,
+    'flushInterval' => 1,
+    'targets' => [
+        [
+            'class' => 'yii\log\FileTarget',
+            'levels' => ['error', 'warning', 'info'],
+            'logVars' => [],
+            'exportInterval' => 1
+        ],
+    ],
+],
+```
 
 License
 ----
