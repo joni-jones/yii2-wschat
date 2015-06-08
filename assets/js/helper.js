@@ -9,12 +9,14 @@
             'Left this chat': 'Вышел из чата',
             'Send message': 'Отправить сообщение',
             'Current room is not available': 'Текущий чат недоступен',
-            'Copied to clipboard': 'Скопировано в буфер обмена'
+            'Copied to clipboard': 'Скопировано в буфер обмена',
+            'Connection error. Try to reload page': 'Ошибка соединения. Попробуйте обновить страницу',
+            'Something wrong. Connection will be closed': 'Произошла ошибка. Соединение будет закрыто'
         }
     };
     Helper.t = function(message) {
         var lang = $.cookie('chatLang') || 'en';
-        if (lang == 'en') {
+        if (lang === 'en') {
             return message;
         }
         return Helper.dict[lang][message];

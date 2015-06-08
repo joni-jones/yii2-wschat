@@ -33,7 +33,7 @@ class ChatAsset extends AssetBundle
     ];
 
      public $depends = [
-         'jones\wschat\ChatLibAsset'
+        'jones\wschat\ChatLibAsset'
      ];
 
     /**
