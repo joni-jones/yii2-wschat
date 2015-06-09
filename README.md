@@ -4,6 +4,7 @@ Web Socket Chat
 Online chat based on web sockets and ratchet php
 
 [![Latest Stable Version](https://poser.pugx.org/joni-jones/yii2-wschat/v/stable)](https://packagist.org/packages/joni-jones/yii2-wschat)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/joni-jones/yii2-wschat/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/joni-jones/yii2-wschat/?branch=master)
 [![Total Downloads](https://poser.pugx.org/joni-jones/yii2-wschat/downloads)](https://packagist.org/packages/joni-jones/yii2-wschat)
 [![License](https://poser.pugx.org/joni-jones/yii2-wschat/license)](https://packagist.org/packages/joni-jones/yii2-wschat)
 [![Join the chat at https://gitter.im/joni-jones/yii2-wschat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/joni-jones/yii2-wschat?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
