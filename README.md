@@ -54,7 +54,6 @@ extension to store messages history and you need just specify connection in `con
 The simple examples postgresql and mysql you can see in `tests/codeception` directory.
 
 2. To start chat server need to create console command and setup it as demon:
-    
     - Create controller which extends `yii\console\Controller`:
         
         ```php
@@ -135,7 +134,8 @@ This code snipped may be added in your code, but after chat widget loading. In t
 Also by default chat will try to load two images:
 `/avatar_16.png` and `/avatar_32.png` from assets folder.
 
-Special thanks for [Anna Litviniuk](http://annalit.com/) for avatar icons.
+Possible issues
+----
 
 If you don't see any messages in console log, check `flushInterval` and `exportInterval` of your log configuration component. The simple configuration may looks like this:
 ```php
@@ -152,6 +152,11 @@ If you don't see any messages in console log, check `flushInterval` and `exportI
     ],
 ],
 ```
+
+Special thanks
+----
+
+[Anna Litviniuk](http://annalit.com/) for avatar icons.
 
 License
 ----
