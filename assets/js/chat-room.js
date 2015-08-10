@@ -20,7 +20,8 @@ Chat.Room.prototype.init = function() {
                 self.options.currentUserId = Helper.uid();
                 $.cookie('chatUserId', self.options.currentUserId);
             }
-            self.conn = new WebSocket('ws://' + self.options.url + ':' + self.options.port);
+            self.conn = new WebSocket('ws' + (location.protocol === 'https:' ? 's' : '') + '://'
+                + self.options.url + ':' + self.options.port);
             self.addConnectionHandlers();
             //set current chat room, by default - all
             var timer = setInterval(function() {

@@ -153,6 +153,9 @@ If you don't see any messages in console log, check `flushInterval` and `exportI
 ],
 ```
 
+If you use `https` protocol chat will try to connect to `wss` instead `ws`. But Ratchet PHP [does not support](https://github.com/reactphp/react/issues/2) work via SSL, so
+you need to use some proxy like [stunnel](https://www.stunnel.org/index.html).
+
 Special thanks
 ----
 
