@@ -74,6 +74,9 @@ class Chat implements MessageComponentInterface
     public function onError(ConnectionInterface $conn, \Exception $e)
     {
         Yii::error($e->getMessage());
+        $conn->send(Json::encode(['type' => 'error', 'data' => [
+            'message' => Yii::t('app', 'Something wrong. Connection will be closed')
+        ]]));
         $conn->close();
     }
 

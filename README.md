@@ -4,6 +4,7 @@ Web Socket Chat
 Online chat based on web sockets and ratchet php
 
 [![Latest Stable Version](https://poser.pugx.org/joni-jones/yii2-wschat/v/stable)](https://packagist.org/packages/joni-jones/yii2-wschat)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/joni-jones/yii2-wschat/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/joni-jones/yii2-wschat/?branch=master)
 [![Total Downloads](https://poser.pugx.org/joni-jones/yii2-wschat/downloads)](https://packagist.org/packages/joni-jones/yii2-wschat)
 [![License](https://poser.pugx.org/joni-jones/yii2-wschat/license)](https://packagist.org/packages/joni-jones/yii2-wschat)
 [![Join the chat at https://gitter.im/joni-jones/yii2-wschat](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/joni-jones/yii2-wschat?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -57,7 +58,6 @@ extension to store messages history and you need just specify connection in `con
 The simple examples postgresql and mysql you can see in `tests/codeception` directory.
 
 2. To start chat server need to create console command and setup it as demon:
-    
     - Create controller which extends `yii\console\Controller`:
         
         ```php
@@ -81,6 +81,7 @@ The simple examples postgresql and mysql you can see in `tests/codeception` dire
             {
                 $server = IoServer::factory(new HttpServer(new WsServer(new Chat(new ChatManager()))), 8080);
                 $server->run();
+                echo 'Server was started successfully. Setup logging to get more details.'.PHP_EOL;
             }
         }
         ```
@@ -88,11 +89,11 @@ The simple examples postgresql and mysql you can see in `tests/codeception` dire
     If you want to use chat for auth users, you must to specify `userClassName` property for `ChatManager` instance.
     For example:
     
-        ```php
+    ```php
         $manager = Yii::configure(new ChatManager(), [
             'userClassName' => '\yii\db\ActiveRecord' //allow to get users from MySQL or PostgreSQL
         ]);
-        ```
+    ```
         
     - Now, you can run chat server with `yii` console command:
     
@@ -107,12 +108,13 @@ The simple examples postgresql and mysql you can see in `tests/codeception` dire
     ```
     
     or if you want to use chat for auth users just add config as parameter:
-      
-        <?=ChatWidget::widget([
-            'auth' => true,
-            'user_id' => '' // setup id of current logged user
-        ]);?>
-    
+        
+    ```php  
+    <?=ChatWidget::widget([
+        'auth' => true,
+        'user_id' => '' // setup id of current logged user
+    ]);?>
+    ```
     
         List of available options:
             auth - boolean, default: false
@@ -129,12 +131,39 @@ You can also store added chat, just specify js callback for vent events:
         console.log(chatModel);
     });
     
-In the callback you will get access to ``Chat.Models.ChatRoom`` backbone model.
+This code snipped may be added in your code, but after chat widget loading. In the callback you will get access to ``Chat.Models.ChatRoom`` backbone model. Now, you need add your code to save chat room instead `console.log()`.
 
 > If `YII_DEBUG` is enabled - all js scripts will be loaded separately.
 
 Also by default chat will try to load two images:
-`/img/avatar_16.png` and `/img/avatar_32.png`, but this images are not included to extension.
+`/avatar_16.png` and `/avatar_32.png` from assets folder.
+
+Possible issues
+----
+
+If you don't see any messages in console log, check `flushInterval` and `exportInterval` of your log configuration component. The simple configuration may looks like this:
+```php
+'log' => [
+    'traceLevel' => YII_DEBUG ? 3 : 0,
+    'flushInterval' => 1,
+    'targets' => [
+        [
+            'class' => 'yii\log\FileTarget',
+            'levels' => ['error', 'warning', 'info'],
+            'logVars' => [],
+            'exportInterval' => 1
+        ],
+    ],
+],
+```
+
+If you use `https` protocol chat will try to connect to `wss` instead `ws`. But Ratchet PHP [does not support](https://github.com/reactphp/react/issues/2) work via SSL, so
+you need to use some proxy like [stunnel](https://www.stunnel.org/index.html).
+
+Special thanks
+----
+
+[Anna Litviniuk](http://annalit.com/) for avatar icons.
 
 License
 ----

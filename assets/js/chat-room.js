@@ -20,7 +20,8 @@ Chat.Room.prototype.init = function() {
                 self.options.currentUserId = Helper.uid();
                 $.cookie('chatUserId', self.options.currentUserId);
             }
-            self.conn = new WebSocket('ws://' + self.options.url + ':' + self.options.port);
+            self.conn = new WebSocket('ws' + (location.protocol === 'https:' ? 's' : '') + '://'
+                + self.options.url + ':' + self.options.port);
             self.addConnectionHandlers();
             //set current chat room, by default - all
             var timer = setInterval(function() {
@@ -30,9 +31,10 @@ Chat.Room.prototype.init = function() {
                 }
             }, 200);
         } else {
-            Helper.Message.error('Current room is not available');
+            Helper.Message.error(Helper.t('Current room is not available'));
         }
     } catch (e) {
+        Helper.Message.error(Helper.t('Connection error. Try to reload page'));
         console.log(e);
     }
     self.initLang();
@@ -105,16 +107,23 @@ Chat.Room.prototype.isFunction = function(name) {
 Chat.Room.prototype.onMessage = function(e) {
     try {
         var response = JSON.parse(e.data);
-        if (response.type == 'auth') {
-            Chat.vent.trigger('user:auth', response.data);
-        } else if (response.type == 'message') {
-            var user = new Chat.Models.User(response.data.message);
-            user.set('type', 'info');
-            //put copy of model to avoid message preparing
-            this.showNotification(user.clone());
-            Chat.vent.trigger('message:add', user);
-        } else if (response.type == 'close') {
-            Chat.vent.trigger('user:remove', response.data.user);
+        switch (response.type) {
+            case 'auth':
+                Chat.vent.trigger('user:auth', response.data);
+                break;
+            case 'message':
+                var user = new Chat.Models.User(response.data.message);
+                user.set('type', 'info');
+                //put copy of model to avoid message preparing
+                this.showNotification(user.clone());
+                Chat.vent.trigger('message:add', user);
+                break;
+            case 'close':
+                Chat.vent.trigger('user:remove', response.data.user);
+                break;
+            case 'error':
+                Helper.Message.error(Helper.t(response.data.message));
+                break;
         }
     } catch (e) {
         console.log(e);
