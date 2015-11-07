@@ -10,6 +10,8 @@ Online chat based on web sockets and ratchet php
 
 > Because `jquery-cookie` moved to new repo. Please use `dev-master` version instead `*` in composer file.
 
+![Demo] (doc/demo.gif)
+
 Installation
 ------------
 
