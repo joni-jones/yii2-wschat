@@ -128,4 +128,5 @@ class User
         $this->chat->addUser($this);
     }
 }
+
  

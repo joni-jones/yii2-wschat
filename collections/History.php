@@ -79,4 +79,5 @@ class History extends AbstractStorage
         return true;
     }
 }
+
  

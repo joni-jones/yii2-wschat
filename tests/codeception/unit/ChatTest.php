@@ -7,7 +7,7 @@ use jones\wschat\components\ChatManager;
 
 class ChatTest extends TestCase
 {
-   /** @var \UnitTester */
+    /** @var \UnitTester */
     protected $tester;
     /** @var \jones\wschat\components\ChatManager */
     protected $cm;

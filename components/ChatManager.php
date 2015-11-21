@@ -169,4 +169,3 @@ class ChatManager
         return array_reverse($data);
     }
 }
- 

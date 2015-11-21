@@ -1,11 +1,14 @@
 <?php
 namespace tests\codeception\unit;
 
-use yii\codeception\TestCase;
-use jones\wschat\components\User;
 use jones\wschat\components\ChatRoom;
+use jones\wschat\components\User;
+use yii\codeception\TestCase;
 
-
+/**
+ * Class UserTest
+ * @package tests\codeception\unit
+ */
 class UserTest extends TestCase
 {
     protected $rid = 1;
@@ -29,7 +32,7 @@ class UserTest extends TestCase
         $this->assertInstanceOf('jones\wschat\components\ChatRoom', $chat,
             'Chat should be instance of jones\wschat\components\ChatRoom');
         $users = $chat->getUsers();
-        $this->assertEquals(1, sizeof($users), 'Chat should contain only one user');
+        $this->assertEquals(1, count($users), 'Chat should contain only one user');
         $this->assertTrue(isset($users[$this->id]), 'User should be in chat');
         $this->assertInstanceOf('jones\wschat\components\User', $users[$this->id],
             'Chat user should be instance of jones\wschat\components\User');

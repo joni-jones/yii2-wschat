@@ -190,4 +190,5 @@ class Chat implements MessageComponentInterface
         }
     }
 }
+
  

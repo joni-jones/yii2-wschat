@@ -1,12 +1,16 @@
 <?php
 namespace tests\codeception\unit;
 
-use yii\codeception\TestCase;
 use jones\wschat\components\AbstractStorage;
+use yii\codeception\TestCase;
 
+/**
+ * Class PgsqlStorageTest
+ * @package tests\codeception\unit
+ */
 class PgsqlStorageTest extends TestCase
 {
-   protected $params = [
+    protected $params = [
         'chat_id' => 1,
         'chat_title' => 'Pgsql chat room',
         'user_id' => 1,

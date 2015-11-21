@@ -71,4 +71,5 @@ class ChatRoom
         unset($this->users[$user->getId()]);
     }
 }
+
  

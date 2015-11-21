@@ -55,3 +55,4 @@ abstract class AbstractStorage
      */
     abstract public function storeMessage(array $params);
 }
+
