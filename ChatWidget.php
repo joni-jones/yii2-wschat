@@ -29,13 +29,21 @@ class ChatWidget extends Widget
     public $imgPath = '@vendor/joni-jones/yii2-wschat/assets/img';
 
     /**
+     * @var boolean is user available to add nwe rooms
+     */
+    public $add_room = true;
+
+    /**
      * @override
      */
     public function run()
     {
         $this->registerJsOptions();
         Yii::$app->assetManager->publish($this->imgPath);
-        return $this->render($this->view, ['auth' => $this->auth]);
+        return $this->render($this->view, [
+            'auth' => $this->auth,
+            'add_room' => $this->add_room
+        ]);
     }
 
     /**

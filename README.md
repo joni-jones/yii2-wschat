@@ -123,7 +123,8 @@ The simple examples postgresql and mysql you can see in `tests/codeception` dire
             chatList - array (allow to set list of preloaded chats), default: [
                 id => 1,
                 title => 'All'
-            ]
+            ],
+            add_room - boolean, default: true (allow to user create new chat rooms)
 
 You can also store added chat, just specify js callback for vent events:
 
