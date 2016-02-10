@@ -18,7 +18,7 @@ Chat.Room.prototype.init = function() {
             //if user id is not set - need to generate it(used for non auth users chat)
             if (!self.options.currentUserId) {
                 self.options.currentUserId = Helper.uid();
-                $.cookie('chatUserId', self.options.currentUserId);
+                Cookies.set('chatUserId', self.options.currentUserId);
             }
             self.conn = new WebSocket('ws' + (location.protocol === 'https:' ? 's' : '') + '://'
                 + self.options.url + ':' + self.options.port);
@@ -43,7 +43,7 @@ Chat.Room.prototype.init = function() {
 Chat.Room.prototype.initLang = function() {
     var lang = navigator.language || navigator.userLanguage;
     lang = lang.split('-');
-    $.cookie('chatLang', lang[0], {expires: 1});
+    Cookies.set('chatLang', lang[0], {expires: 1});
 };
 Chat.Room.prototype.addEventsHandlers = function() {
     var self = this;
@@ -123,6 +123,7 @@ Chat.Room.prototype.onMessage = function(e) {
                 break;
             case 'error':
                 Helper.Message.error(Helper.t(response.data.message));
+                Cookies.remove('chatUserId');
                 break;
         }
     } catch (e) {

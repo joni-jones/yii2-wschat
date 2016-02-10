@@ -10,7 +10,7 @@ $(document).ready(function() {
     roomListView.render();
 
     //create chat after rooms loading
-    currentUserId = currentUserId || $.cookie('chatUserId');
+    currentUserId = currentUserId || Cookies.get('chatUserId');
     var chat = new Chat.Room({port: port, currentUserId: currentUserId});
     if (!currentUserId) {
         var addUserView = new Chat.Views.AddUserView();

@@ -15,7 +15,7 @@
         }
     };
     Helper.t = function(message) {
-        var lang = $.cookie('chatLang') || 'en';
+        var lang = Cookies.get('chatLang') || 'en';
         if (lang === 'en') {
             return message;
         }
