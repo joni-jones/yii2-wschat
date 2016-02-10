@@ -19,13 +19,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist joni-jones/yii2-wschat "*"
+php composer.phar require --prefer-dist joni-jones/yii2-wschat "1.0.0-beta"
 ```
 
 or add
 
 ```
-"joni-jones/yii2-wschat": "*"
+"joni-jones/yii2-wschat": "1.0.0-beta"
 ```
 
 to the require section of your `composer.json` file.
@@ -54,6 +54,8 @@ extension to store messages history and you need just specify connection in `con
 
 	> IMPORTANT: if you use db component - you need to create table `history` in your database.
 The simple examples postgresql and mysql you can see in `tests/codeception` directory.
+
+	> If you use PHP 7 please see this [issue](https://github.com/yiisoft/yii2-mongodb/issues/81), which describes how to install a needed version of mongo extension
 
 2. To start chat server need to create console command and setup it as demon:
     - Create controller which extends `yii\console\Controller`:
