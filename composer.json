@@ -7,8 +7,7 @@
     "stability": "stable",
     "authors": [
         {
-            "name": "Ievgen Sentiabov",
-            "email": "ievgen.sentiabov@gmail.com"
+            "name": "Ievgen Sentiabov"
         }
     ],
     "require": {

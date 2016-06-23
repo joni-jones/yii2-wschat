@@ -19,13 +19,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist joni-jones/yii2-wschat "1.0.0-beta"
+php composer.phar require --prefer-dist joni-jones/yii2-wschat
 ```
 
 or add
 
 ```
-"joni-jones/yii2-wschat": "1.0.0-beta"
+"joni-jones/yii2-wschat": "*"
 ```
 
 to the require section of your `composer.json` file.
@@ -34,11 +34,11 @@ Usage
 ------------
 
 1. The chat extension can use any database storage supported by yii.
-	
-	If `mongodb` extension specified the chat will be try to use it as message history storage, otherwise extension
+
+    If `mongodb` extension specified the chat will be try to use it as message history storage, otherwise extension
 will be use specified in application config db component.
-	
-	The simple example how to use mongodb storage is listed below.
+
+    The simple example how to use mongodb storage is listed below.
 Install [MongoDB](http://docs.mongodb.org/) and [yii2-mongodb](http://www.yiiframework.com/doc-2.0/ext-mongodb-index.html)
 extension to store messages history and you need just specify connection in `console` config:
 
@@ -52,10 +52,9 @@ extension to store messages history and you need just specify connection in `con
     ```
     In created mongodb database you need to create collection named as `history`;
 
-	> IMPORTANT: if you use db component - you need to create table `history` in your database.
+    IMPORTANT: if you use db component - you need to create table `history` in your database.
 The simple examples postgresql and mysql you can see in `tests/codeception` directory.
 
-	> If you use PHP 7 please see this [issue](https://github.com/yiisoft/yii2-mongodb/issues/81), which describes how to install a needed version of mongo extension
 
 2. To start chat server need to create console command and setup it as demon:
     - Create controller which extends `yii\console\Controller`:
@@ -104,27 +103,27 @@ The simple examples postgresql and mysql you can see in `tests/codeception` dire
 3. To add chat on page just call:
 
     ```php
-    <?=ChatWidget::widget();?>
+    <?php echo ChatWidget::widget();?>
     ```
     
     or if you want to use chat for auth users just add config as parameter:
         
     ```php  
-    <?=ChatWidget::widget([
+    <?php echo ChatWidget::widget([
         'auth' => true,
         'user_id' => '' // setup id of current logged user
     ]);?>
     ```
     
         List of available options:
-            auth - boolean, default: false
-            user_id - mixed, default: null
-            port - integer, default: 8080
-            chatList - array (allow to set list of preloaded chats), default: [
-                id => 1,
-                title => 'All'
-            ],
-            add_room - boolean, default: true (allow to user create new chat rooms)
+        auth - boolean, default: false
+        user_id - mixed, default: null
+        port - integer, default: 8080
+        chatList - array (allow to set list of preloaded chats), default: [
+            id => 1,
+            title => 'All'
+        ],
+        add_room - boolean, default: true (allow to user create new chat rooms)
 
 You can also store added chat, just specify js callback for vent events:
 
@@ -160,11 +159,6 @@ If you don't see any messages in console log, check `flushInterval` and `exportI
 
 If you use `https` protocol chat will try to connect to `wss` instead `ws`. But Ratchet PHP [does not support](https://github.com/reactphp/react/issues/2) work via SSL, so
 you need to use some proxy like [stunnel](https://www.stunnel.org/index.html).
-
-Special thanks
-----
-
-[Anna Litviniuk](http://annalit.com/) for avatar icons.
 
 License
 ----
