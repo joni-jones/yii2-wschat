@@ -30,8 +30,6 @@ or add
 
 to the require section of your `composer.json` file.
 
-IMPORTANT: Because a `yii2-mongodb` extension is still not released for PHP 7, you need to set `minimum-stability` to `dev` in your `composer.json`
-
 Usage
 ------------
 
